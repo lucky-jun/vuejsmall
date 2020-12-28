@@ -1,22 +1,53 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
+const Home = ()=> import('views/home/Home')
+const Cart = ()=> import('views/cart/Cart')
+const Category = ()=> import('views/category/Category')
+const Profile = ()=> import('views/profile/Profile')
+const Login = ()=>import('views/profile/Login')
+const Regist = ()=>import('views/profile/Regist')
+//安装插件
 Vue.use(VueRouter)
 
+//防止路由访问重复错误
+const replaces = VueRouter.prototype.replace;
+VueRouter.prototype.replace = function replace(location) {
+  return replaces.call(this, location).catch(err => err);
+};
+const pushs = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return pushs.call(this, location).catch(err => err)
+}
+//创建对象
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path:'',
+    redirect:Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/home',
+    component:Home
+  },
+  {
+    path: '/cart',
+    component:Cart
+  },
+  {
+    path: '/category',
+    component:Category
+  },
+  {
+    path: '/profile',
+    component:Profile
+  },
+  {
+    path: '/login',
+    component:Login
+  },
+  {
+    path: '/regist',
+    component:Regist
   }
 ]
 
