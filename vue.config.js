@@ -10,6 +10,8 @@ module.exports = {
             .set('acssets',resolve('src/assets'))
             .set('@',resolve('src'))
             .set('views',resolve('src/views'))
+            .set('router',resolve('src/router'))
+            .set('network',resolve('src/network'))
     },
     devServer:{
         port:8081

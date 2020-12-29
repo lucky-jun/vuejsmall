@@ -6,16 +6,16 @@
 <!--            </div>-->
             <el-form label-width="0px" class="login_form" :model="loginForm" :rules="loginFormRules" >
                 <el-form-item prop="username">
-                    <el-input v-model.lazy="loginForm.username"></el-input>
+                    <el-input v-model.lazy="loginForm.username" placeholder="请输入用户名"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
 <!--                    使用第三方UI界面@keyup.enter不起作用可加上.native，还不行可能需要$listeners-->
-                    <el-input v-model.lazy="loginForm.password" @keyup.enter.native="login" type="password"></el-input>
+                    <el-input v-model.lazy="loginForm.password" @keyup.enter.native="login" type="password" placeholder="请输入密码"></el-input>
                 </el-form-item>
-                <el-form-item v-if="isActive">用户名或密码错误</el-form-item>
                 <el-form-item class="btns">
+<!--                    <span v-if="isActive">用户名或密码错误</span>-->
                     <el-button type="primary" @click="login">登录</el-button>
-                    <el-button type="info">重置</el-button>
+                    <el-button type="button" @click="regist1">注册</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -37,11 +37,11 @@
                 loginFormRules: {
                     username: [
                         { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                        { min: 2, max: 12, message: '长度在 2 到 12 个字符', trigger: 'blur' }
                     ],
                     password: [
                         { required: true, message: '请输入密码', trigger: 'blur' },
-                        { min: 3, max: 5, message: '长度在 3 到 7 个字符', trigger: 'blur' }
+                        { min: 3, max: 12, message: '长度在 3 到 12 个字符', trigger: 'blur' }
                     ]
                 }
             }
@@ -79,7 +79,27 @@
 
                     if(res.flag){
                         console.log('请求登录成功');
-                        this.$router.replace('/profile')
+                        console.log('请求登录成功'+this.$store.state.user.sessionID);
+                        console.log('请求登录成功'+this.$store.state.user.userID);
+                        //    写入共享仓库
+                        new Promise((resolve,reject)=>{
+                            console.log('ahahhaha');
+                            const user={userID:res.userID,power:res.power,sessionID:res.sessionID}
+                            this.$store.commit('LoginUpstoreUser',user)
+                            console.log(this.$store.getters.checkLogin);
+                            if(this.$store.getters.checkLogin){
+                                resolve('恭喜您登陆成功，您上次登录的时间为：'+res.lastTime)
+                            }else{
+                                reject('请求登录失败')
+                            }
+                        }).then(res=>{
+                            alert(res);
+                            setTimeout(()=>{
+                                this.$router.replace('/home')
+                            },2000)
+                        }).catch(err=>{
+                            alert(err)
+                        })
                     }else{
                         console.log('请求登录失败');
                         this.loginForm.error1=true
@@ -95,7 +115,12 @@
                 // window.sessionStorage.setItem('token', result.data.token)
                 // // 跳转主页
                 // this.$router.push('/home')
-            }
+
+            },
+            regist1(){
+                console.log('1111');
+                this.$router.push('/regist')
+        }
         }
     }
 </script>
@@ -114,7 +139,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);}
     .avatar_box {
         height: 130px;
         width: 130px;
@@ -125,14 +150,12 @@
         position: absolute;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: #fff;
+        background-color: #fff;}
     img {
         width: 100%;
         height: 100%;
         border-radius: 50%;
         background-color: #eee;
-    }
-    }
     }
 
     .login_form {

@@ -22,10 +22,9 @@
         },
         computed:{
             isActive(){
-                console.log(this.path);
-                console.log('2222:'+this.$route.path);
-                console.log(this.$route.path.indexOf(this.path) !=-1);
-
+                // console.log(this.path);
+                // console.log('2222:'+this.$route.path);
+                // console.log(this.$route.path.indexOf(this.path) !=-1);
                 return this.$route.path.indexOf(this.path) !=-1
             },
             activeFonts(){
