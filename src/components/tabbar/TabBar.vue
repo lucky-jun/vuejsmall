@@ -13,7 +13,8 @@
 <style scoped>
     #tab-bar{
         display: flex;
-        background-color: #42b983;
+        background-color: #80e4b791;
+        min-width: 1000px;
 
         /*position: fixed;*/
         left: 0;

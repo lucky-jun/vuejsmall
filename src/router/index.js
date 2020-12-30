@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 const Home = ()=> import('views/home/Home')
 const Cart = ()=> import('views/cart/Cart')
@@ -7,6 +8,7 @@ const Category = ()=> import('views/category/Category')
 const Profile = ()=> import('views/profile/Profile')
 const Login = ()=>import('views/profile/Login')
 const Regist = ()=>import('views/profile/Regist')
+const Details = ()=>import('views/Details/Details')
 //安装插件
 Vue.use(VueRouter)
 
@@ -39,7 +41,20 @@ const routes = [
   },
   {
     path: '/profile',
-    component:Profile
+    component:Profile,
+    //路由独享守卫，前置守卫
+    beforeEnter:(to,from,next)=>{
+      console.log('进入守卫');
+      if(!store.getters.checkSessionID){
+        console.log('路由判断已登录');
+        console.log("sessionID:"+store.state.user.sessionID);
+        next()
+      }else{
+        console.log('路由判断未登录')
+        console.log("sessionID:"+store.state.user.sessionID);
+        next('/login')
+      }
+    }
   },
   {
     path: '/login',
@@ -48,6 +63,11 @@ const routes = [
   {
     path: '/regist',
     component:Regist
+  },
+  {
+    path: '/details',
+    // path: '/Details/:id',
+    component:Details
   }
 ]
 

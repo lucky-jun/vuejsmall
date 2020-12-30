@@ -5,25 +5,39 @@ Vue.use(Vuex)
 
 
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     user:[{userID: '',power: '',sessionID:''}],
+      Sumprice:0,
   },
   mutations: {
+      // 登录后记录登录状态
     LoginUpstoreUser(state,payload){
-      state.user.userID = payload.userID;
-      state.user.power = payload.power;
-      state.user.session = payload.session;
-    }
+      sessionStorage.setItem('userID',payload.userID)
+      sessionStorage.setItem('power',payload.power)
+      sessionStorage.setItem('sessionID',payload.sessionID)
+      state.user.userID = sessionStorage.getItem('userID');
+      state.user.power = sessionStorage.getItem('power');
+      state.user.sessionID = sessionStorage.getItem('sessionID');
+    },
+      // 刷新过后重新从sessionStorage中获取登录信息
+      updatestate() {
+          store.state.user.userID = sessionStorage.getItem('userID');
+          store.state.user.power = sessionStorage.getItem('power');
+          store.state.user.sessionID = sessionStorage.getItem('sessionID');
+      },
+      //获取总价格
+      SumPrice(state,payload){
+        state.Sumprice = payload.sumprice
+      }
   },
   getters:{
-      checkLogin(){
-        // if(state.user.userID==''|| state.user.power==''||state.user.sessionID==''){
-        //     return false
-        // }else{
-        //     return true
-        // }
-        return true
+      checkSessionID(){
+          store.commit('updatestate')
+        return store.state.user.sessionID==null
+      },
+      getSumprice(){
+          return store.state.Sumprice
       }
   },
   actions: {
@@ -31,3 +45,4 @@ export default new Vuex.Store({
   modules: {
   }
 })
+export default store

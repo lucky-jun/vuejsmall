@@ -13,6 +13,7 @@
                     <el-input v-model.lazy="loginForm.password" @keyup.enter.native="login" type="password" placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <el-form-item class="btns">
+                    <span v-if="isActive" style="color: red">用户名或密码错误</span>
 <!--                    <span v-if="isActive">用户名或密码错误</span>-->
                     <el-button type="primary" @click="login">登录</el-button>
                     <el-button type="button" @click="regist1">注册</el-button>
@@ -84,10 +85,15 @@
                         //    写入共享仓库
                         new Promise((resolve,reject)=>{
                             console.log('ahahhaha');
+                            console.log(res.userID);
+                            console.log(res.power);
+                            console.log(res.sessionID);
+
                             const user={userID:res.userID,power:res.power,sessionID:res.sessionID}
                             this.$store.commit('LoginUpstoreUser',user)
-                            console.log(this.$store.getters.checkLogin);
-                            if(this.$store.getters.checkLogin){
+                            console.log(this.$store.getters.checkSessionID);
+                            console.log(this.$store.getters.checkSessionID!=null);
+                            if(this.$store.getters.checkSessionID!=null){
                                 resolve('恭喜您登陆成功，您上次登录的时间为：'+res.lastTime)
                             }else{
                                 reject('请求登录失败')
@@ -96,7 +102,7 @@
                             alert(res);
                             setTimeout(()=>{
                                 this.$router.replace('/home')
-                            },2000)
+                            },1000)
                         }).catch(err=>{
                             alert(err)
                         })
