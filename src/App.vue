@@ -49,6 +49,13 @@
         /*marg: 0px;*/
         /*float: top;*/
         /*border: 2px solid red;*/
+
+    /*    悬浮*/
+    /*    left: 0;*/
+    /*    position: fixed;*/
+        /*//这里换成top:0;就悬浮在头部*/
+        /*top: 0;*/
+        /*margin-left:130px;*/
     }
     #router{
         /*float: bottom;*/

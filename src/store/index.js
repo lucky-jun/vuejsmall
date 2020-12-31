@@ -9,6 +9,7 @@ const store = new Vuex.Store({
   state: {
     user:[{userID: '',power: '',sessionID:''}],
       Sumprice:0,
+      checkboxGoods:Array
   },
   mutations: {
       // 登录后记录登录状态
@@ -29,6 +30,10 @@ const store = new Vuex.Store({
       //获取总价格
       SumPrice(state,payload){
         state.Sumprice = payload.sumprice
+          state.checkboxGoods = payload.GoodsID
+      },
+      checkboxGoods(state,payload){
+        state.checkboxGoods = payload.GoodsID
       }
   },
   getters:{

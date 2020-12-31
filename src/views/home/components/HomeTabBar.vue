@@ -11,5 +11,7 @@
 </script>
 
 <style scoped>
-
+    #homeTabBar{
+        /*display: flex;*/
+    }
 </style>

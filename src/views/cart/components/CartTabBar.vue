@@ -1,6 +1,8 @@
 <template>
     <div id="cartTabBar">
-        <slot></slot>
+        <div id="goods">
+            <slot></slot>
+        </div>
     </div>
 </template>
 

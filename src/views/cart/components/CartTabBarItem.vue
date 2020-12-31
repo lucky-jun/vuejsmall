@@ -39,7 +39,6 @@
         data(){
             return{
                 Cindex:this.index,
-                Cid:this.goods.id
             }
         },
         computed:{
@@ -50,7 +49,9 @@
         methods:{
             GoodsDetails(){
                 console.log('即将跳转商品详情页');
-                console.log('点击了：'+this.Cid)
+                console.log(this.Cindex);
+
+                console.log('点击了：'+this.goods[this.Cindex].id)
                 console.log('点击了：'+this.goods[this.Cindex].name)
                 //通过query进行数据传递
                 // this.$router.push({path:'/details',query:{goodsName:this.goodsName,goodsId: this.goodsId}})
@@ -96,7 +97,7 @@
         /*width: 1580px;*/
         /*max-width: 1600px;*/
         min-width: auto;
-        border: 2px solid black;
+        border: 2px solid #e4dada7a;
         justify-content: space-between;
         display: flex;
         margin-bottom: 10px;
@@ -104,12 +105,12 @@
     #choice{
         height: 100%;
         width: 30px;
-        /*border: 2px solid red;*/
+        border: 2px solid red;
     }
     #picture{
         height: 100%;
         width: 100px;
-        /*border: 2px solid red;*/
+        border: 2px solid red;
     }
     #name{
         height: 100%;

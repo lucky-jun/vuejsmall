@@ -2,18 +2,8 @@
     <div class="cart">
 <!--        <h1>购物车</h1>-->
 <!--        <item></item>-->
-        <div id="title"  class="GongGong">
-            <div id="choice" class="GongGong"><el-checkbox slot="item-choice">全选</el-checkbox></div>
-            <div id="GoodsInf" class="GongGong"><h3>商品信息</h3></div>
-            <div id="price"><h3>价格</h3></div>
-            <div id="InAndDe"><h3>数量</h3></div>
-            <div id="oprations"><h3>操作</h3></div>
-        </div>
         <div class="Center">
-            <content-cart-tab-bar :goods1="goods"></content-cart-tab-bar>
-        </div>
-        <div class="Bottom">
-
+            <content-cart-tab-bar :goods1="goods" @getGoodsId="getGoodsId"></content-cart-tab-bar>
         </div>
     </div>
 </template>
@@ -74,6 +64,17 @@
         components:{
             // item
             ContentCartTabBar
+        },
+        //过滤器
+        filters:{
+            sumPrice(price){
+                return '￥'+price.toFixed(2)
+            }
+        },
+        methods:{
+            getGoodsId(goods){
+                console.log('选择了：'+goods);
+            }
         }
     }
 </script>
@@ -83,6 +84,8 @@
         /*display: flex;*/
         position: absolute;
         margin-left: 130px;
+        display: flex;
+        flex-direction: column;
     }
     .GongGong{
         display: flex;
@@ -137,13 +140,42 @@
         justify-content:space-between;
         /*上下居中*/
         align-items:center;
-        border: 2px solid black;
+        border: 2px solid #94919180;
         margin-bottom: 10px;
     }
     .Center{
         /*float: top;*/
     }
     .Bottom{
+        background-color: #aaaaaa;
         /*float: bottom;*/
+        float: left;
+        width: 1310px;
+        height: 49px;
+        /*margin-left: 9px;*/
+        border: 2px solid red;
+        display: flex;
+        /*text-align: center;*/
+        justify-content:space-between;
+        /*上下居中*/
+        align-items:center;
+    /*    悬浮*/
+
+        left: 130px;
+        position: fixed;
+        /*!/这里换成top:0;就悬浮在头部*!*!*/
+        bottom: 0;
+        /*margin-left:;*/
+        /*width: 100%;*/
+        /*z-index: 100;*/
+    }
+    #SumPrice{
+        float: left;
+        text-align: center;
+        margin-left: 500px;
+    }
+    #PaySumPrice{
+        float: right;
+        margin-right: 60px;
     }
 </style>
