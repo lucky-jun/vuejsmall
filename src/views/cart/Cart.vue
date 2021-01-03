@@ -4,13 +4,22 @@
 <!--        <item></item>-->
         <div class="Center">
             <content-cart-tab-bar :goods1="goods" @getGoodsId="getGoodsId"></content-cart-tab-bar>
+
+<!--            <confirm></confirm>-->
         </div>
     </div>
 </template>
 
 <script>
-    import item from "./components/item";
+
+    import {request} from "../../network";
+
+    // import item from "./components/item";
     import ContentCartTabBar from "./ContentCartTabBar";
+    import testCheckBox from "./components/testCheckBox";
+    import Confirm from "../Details/components/testTanChuang"
+
+
     export default {
         name: "Cart",
         data(){
@@ -63,7 +72,9 @@
         },
         components:{
             // item
-            ContentCartTabBar
+            Confirm,
+            ContentCartTabBar,
+            testCheckBox
         },
         //过滤器
         filters:{
@@ -75,6 +86,18 @@
             getGoodsId(goods){
                 console.log('选择了：'+goods);
             }
+        },
+        created() {
+            console.log('创建购物车列表');
+            request({
+                url:'/queryToCart.do',
+            }).then(res=>{
+                console.log(res);
+                this.goods=res.data
+            }).catch(err=>{
+                console.log(err);
+                console.log('请求购物车列表失败');
+            })
         }
     }
 </script>

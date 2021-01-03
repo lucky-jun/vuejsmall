@@ -54,7 +54,7 @@
                 console.log('点击了：'+this.goods[this.Cindex].id)
                 console.log('点击了：'+this.goods[this.Cindex].name)
                 //通过query进行数据传递
-                // this.$router.push({path:'/details',query:{goodsName:this.goodsName,goodsId: this.goodsId}})
+                this.$router.push({path:'/details',query:{goodsName:this.goods[this.Cindex].name,goodsId: this.goods[this.Cindex].id}})
             //    动态路由跳转
             //     this.$router.push('/details/'+this.id)
             },
@@ -80,6 +80,7 @@
 
 <style scoped>
     .GongGong{
+        position: relative;
         display: flex;
         text-align: center;
         /*justify-content: space-between;*/

@@ -318,7 +318,7 @@ export default {
         Page(val){
             console.log("返回页数：" + val);
             request({
-                url:'/page.do',
+                url:'/queryGoodsPage.do',
                 methods: 'post',
                 data:{
                     page:val,

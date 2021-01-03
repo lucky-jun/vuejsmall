@@ -9,6 +9,10 @@ const Profile = ()=> import('views/profile/Profile')
 const Login = ()=>import('views/profile/Login')
 const Regist = ()=>import('views/profile/Regist')
 const Details = ()=>import('views/Details/Details')
+const BuyGoods = ()=>import('views/Details/BuyGoods')
+const PaymentSuccessful = ()=>import('views/Buy/PaymentSuccessful')
+const PaymentFailed = ()=>import('views/Buy/PaymentFailed')
+
 //安装插件
 Vue.use(VueRouter)
 
@@ -67,7 +71,25 @@ const routes = [
   {
     path: '/details',
     // path: '/Details/:id',
-    component:Details
+    component:Details,
+    beforeEnter:(to,from,next)=>{
+      console.log('进入守卫');
+      next()
+    }
+  },
+  {
+    path: '/buygoods',
+    component:BuyGoods
+  },
+  {
+    //支付成功
+    path: '/paymentsuccessful',
+    component:PaymentSuccessful
+  },
+  {
+  //  支付失败
+    path: '/paymentfailed',
+    component:PaymentFailed
   }
 ]
 

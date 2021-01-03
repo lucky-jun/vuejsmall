@@ -1,0 +1,172 @@
+<template>
+    <div id="DetailTabBarItem">
+        <div id="inf">
+            <!--        图片-->
+            <div id="picture"><slot name="item-picture"></slot></div>
+            <div id="inf1">
+                <!--        标题名称-->
+                <div id="title"><slot name="item-title"></slot></div>
+                <!--        价格-->
+                <div id="price"><slot name="item-price"></slot></div>
+                <!--        操作：加入购物车、直接购买-->
+                <div id="shuxing"><slot name="item-shuxing"></slot></div>
+                <div id="oprations">
+                    <button @click="joinCart">加入购物车</button>
+                    <button @click="buy">购买</button>
+                </div>
+            </div>
+        </div>
+<!--        详情内容-->
+        <div id="context"><slot name="item-context"></slot></div>
+    </div>
+</template>
+
+<script>
+    import {request} from "../../../network";
+
+    export default {
+        name: "DetailTabBarItem",
+        props:{
+            goods1:{
+                type:Array
+            }
+        },
+        // props:{
+        //     goods2:Array
+        // },
+        data(){
+            return{
+                goods:this.goods1,
+                xxxx:[1,2,3,4,5]
+            }
+        },
+        methods:{
+            joinCart(){
+                console.log('将商品ID加入购物车表');
+                // axios
+
+                //全部成功才算成功
+                // Promise.all([
+                //     //添加购物车
+                //     new Promise((resolve,reject) => {
+                //         //加入购物车单
+                //         request({
+                //             url:'insertToCart',
+                //             method:'post',
+                //             data:{
+                //                 goodsId:this.goods[0].id,
+                //                 userId:this.sessionStorage.getItem('userID'),
+                //                 goodsNumber:1
+                //             }
+                //         }).then(res=>{
+                //             resolve(res)
+                //         }).catch(err=>{
+                //             reject(err)
+                //         })
+                //     }),
+                //     new Promise((resolve,reject) =>{
+                //         // 删除购物车单
+                //         request({
+                //             url:'deleteToCart',
+                //             method:'post',
+                //             data:{
+                //
+                //             }
+                //         }).then(res=>{
+                //             resolve(res)
+                //         }).catch(err=>{
+                //             reject(err)
+                //         })
+                //     } )
+                // ]).then().catch()
+
+
+                request({
+                    url:'/insertToCart.do',
+                    method:'post',
+                    data:{
+                        goodsId:this.goods[0].id,
+                        userId:sessionStorage.getItem('userID'),
+                        goodsNumber:1
+                    }
+                }).then(res=>{
+                    console.log(res);
+                    console.log(res.flag);
+                    if(res.flag){
+                        console.log('添加购物车操作成功');
+                    }else{
+                        console.log('添加购物车操作失败.then');
+                    }
+                    // 短暂alert()
+                }).catch(err=>{
+                    console.log(err);
+                    console.log('添加购物车操作失败.catch');
+                })
+            },
+            buy(){
+                console.log('即将跳转购买界面');
+                //    跳转购买界面
+                    this.$router.push({path:'/buygoods',query:{goods:this.goods}})
+            }
+        },
+    }
+</script>
+
+<style scoped>
+#DetailTabBarItem{
+    width: 1070px;
+    height: 650px;
+    /*background: #2b4b6b;*/
+}
+    #inf{
+        /*display: flex;*/
+        height: 650px;
+        width: auto;
+        margin: 10px;
+        border: 2px solid red;
+    }
+    #picture{
+        width: 470px;
+        height: 100%;
+        float: left;
+        border: 2px solid red;
+    }
+    #inf1{
+        width: 550px;
+        height: 100%;
+        float: left;
+        margin-left: 10px;
+        border: 2px solid red;
+    }
+    #title{
+        width: 100%;
+        height: 80px;
+        border: 2px solid red;
+    }
+    #price{
+        width: 100%;
+        height: 80px;
+        margin-top: 9px;
+        border: 2px solid blue;
+    }
+    #shuxing{
+        width: 100%;
+        height: 350px;
+        margin-top: 9px;
+        border: 2px solid blue;
+    }
+    #oprations{
+        width: 100%;
+        height: 100px;
+        border: 2px solid blue;
+        text-align: center;
+        margin-top: 9px;
+    }
+
+
+    #context{
+        width: auto;
+        height: auto;
+        border: 2px solid green;
+    }
+</style>

@@ -11,7 +11,7 @@
             <cart-tab-bar>
                 <cart-tab-bar-item v-for="(i,index) in goods" :goods="goods" :index="index">
                     <!--                <el-checkbox slot="item-choice" ></el-checkbox>-->
-                    <input slot="item-choice" type="checkbox" :value="i.id" v-model="gather" @click="goStore(i.id,i.number,sumprice(index),index)"></input>
+                    <input slot="item-choice" type="checkbox" :value="i" v-model="goodsCheckBox"></input>
                     <img slot="item-picture" :src="i.img" alt="图片">
                     <div slot="item-name">{{i.name}}</div>
                     <div slot="item-price">{{sumprice(index)}}</div>
@@ -25,9 +25,9 @@
         </div>
         <div class="Bottom">
 <!--            <div id="SumPrice">总价格：{{this.$store.getters.getSumprice| sumPrice}}</div>-->
-            <div id="SumPrice">总价格：</div>
+            <div id="SumPrice">总价格：{{sum|showPrice}}</div>
             <div id="PaySumPrice">
-                <button>结算</button>
+                <button @click="PaySum">结算</button>
             </div>
         </div>
     </div>
@@ -46,11 +46,20 @@
         data(){
             return{
                 goods:this.goods1,
-                goodsIndex:[],
-                gather:[]
+                goodsCheckBox:[],
+                goodsId:[]
             }
         },
         computed:{
+            sum(){
+                //将点击勾选的商品加入数组中，然后获取数组中的商品的价格计算出来
+                let SumPrice=0
+                SumPrice=this.goodsCheckBox.reduce(function(pre,goods){
+                    return pre + goods.price * goods.number
+                },0)
+                // console.log("reduce简写："+SumPrice);
+                return SumPrice;
+            }
         },
         components:{
             CartTabBar,
@@ -76,21 +85,28 @@
             incrementBtn(index){
                 this.goods[index].number++
             },
-            goStore(id,number,price,index){
-
-                // console.log('即将传值：'+this.gather)
-                console.log('即将传值：'+id)
-                console.log('即将传值：'+number)
-                console.log('即将传值：'+price)
-                console.log('即将传值：'+this.go)
-
-                // this.$emit('getGoodsId',this.gather)
+            PaySum(){
+                // console.log(this.goodsCheckBox)
+                for(let item of this.goodsCheckBox){
+                    this.goodsId.push(item.id)
+                }
+                console.log(this.goodsId);
+            }
+        },
+        filters:{
+            showPrice(price){
+                return '￥'+price.toFixed(2)
             }
         }
     }
 </script>
 
 <style>
+    #ContentCartTabBar{
+        position: relative;
+        border: 2px solid red;
+    }
+
     #ContentCartTabBar img{
         width: 100%;
         height: 100%;
@@ -121,32 +137,46 @@
         background-color: #aaaaaa;
         /*float: bottom;*/
         float: left;
-        width: 1310px;
+        /*width: 1310px;*/
+        width: 200px;
         height: 49px;
         /*margin-left: 9px;*/
         border: 2px solid red;
         display: flex;
-        /*text-align: center;*/
+        text-align: center;
         justify-content:space-between;
         /*上下居中*/
         align-items:center;
+
         /*    悬浮*/
 
-        left: 130px;
+        /*left: 130px;*/
         position: fixed;
-        /*//这里换成top:0;就悬浮在头部*/
-        bottom: 0;
-        /*margin-left:;*/
+        /*position: absolute;*/
+        /*//这里换成top:0;就悬浮在头部*!*!*/
+        bottom: 0px;
+        margin:  0 auto;
+        left:0px;
         /*width: 100%;*/
         /*z-index: 100;*/
+
+        /*position:fixed;*/
+        /*top:0px;*/
+        /*float:inherit;*/
+
+
+
+
+
+
     }
     #SumPrice{
         float: left;
         text-align: center;
-        margin-left: 500px;
+        /*margin-left: 500px;*/
     }
     #PaySumPrice{
         float: right;
-        margin-right: 60px;
+        /*margin-right: 60px;*/
     }
 </style>
