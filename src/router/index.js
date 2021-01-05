@@ -49,13 +49,24 @@ const routes = [
     //路由独享守卫，前置守卫
     beforeEnter:(to,from,next)=>{
       console.log('进入守卫');
-      if(!store.getters.checkSessionID){
+      console.log("SessionID111:"+sessionStorage.getItem("sessionID"));
+      console.log("SessionID111:"+sessionStorage.getItem("sessionID")===null);
+      // if(store.getters.checkSessionID){
+      //   console.log('路由判断已登录');
+      //   console.log("sessionID:"+store.state.user.sessionID);
+      //   next()
+      // }else{
+      //   console.log('路由判断未登录')
+      //   console.log("sessionID:"+store.state.user.sessionID);
+      //   next('/login')
+      // }
+      if(sessionStorage.getItem("sessionID")!=null){
         console.log('路由判断已登录');
-        console.log("sessionID:"+store.state.user.sessionID);
+        // console.log("sessionID:"+store.state.user.sessionID);
         next()
       }else{
         console.log('路由判断未登录')
-        console.log("sessionID:"+store.state.user.sessionID);
+        // console.log("sessionID:"+store.state.user.sessionID);
         next('/login')
       }
     }

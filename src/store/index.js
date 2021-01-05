@@ -10,7 +10,8 @@ const store = new Vuex.Store({
     user:[{userID: '',power: '',sessionID:''}],
       Sumprice:0,
       checkboxGoods:Array,
-      goods:[{}]
+      goods:[{}],
+      waitOrderId:''
   },
   mutations: {
       // 登录后记录登录状态
@@ -35,15 +36,31 @@ const store = new Vuex.Store({
       },
       checkboxGoods(state,payload){
         state.checkboxGoods = payload.GoodsID
+      },
+      setWaitOrderId(state,payload){
+          console.log('Vuex设置订单编号'+payload)
+          console.log('Vuex设置订单编号'+payload.waitOrderId)
+        state.waitOrderId = payload.waitOrderId
       }
   },
   getters:{
       checkSessionID(){
           store.commit('updatestate')
-        return store.state.user.sessionID==null
+          console.log('store1:'+store.state.user.sessionID)
+          if(store.state.user.sessionID!=null){
+              console.log('store2:'+store.state.user.sessionID)
+              return true
+          }else{
+              console.log('store3:'+store.state.user.sessionID)
+              return false
+          }
       },
       getSumprice(){
           return store.state.Sumprice
+      },
+      getWaitOrderId(){
+          console.log('Vuex获取订单编号'+store.state.waitOrderId)
+          return store.state.waitOrderId
       }
   },
   actions: {

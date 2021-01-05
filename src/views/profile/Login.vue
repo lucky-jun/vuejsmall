@@ -25,6 +25,7 @@
 
 <script>
     import {request} from '../../network/index'
+    import {MessageBox} from "element-ui";
     export default {
         // 数据的定义和接收
         data () {
@@ -94,17 +95,35 @@
                             console.log(this.$store.getters.checkSessionID);
                             console.log(this.$store.getters.checkSessionID!=null);
                             if(this.$store.getters.checkSessionID!=null){
-                                resolve('恭喜您登陆成功，您上次登录的时间为：'+res.lastTime)
+                                resolve('您上次登录的时间为:'+res.lastTime+', 即将为您跳转首页！')
                             }else{
                                 reject('请求登录失败')
                             }
                         }).then(res=>{
-                            alert(res);
+                            // alert(res);
+                            MessageBox.alert(res,'登录成功！',{
+                                confirmButtonText:'确定',
+                                type:"success",
+                                callback:action => {
+                                    this.$router.replace('/home')
+                                }
+                            })
                             setTimeout(()=>{
+                                MessageBox.close();
                                 this.$router.replace('/home')
-                            },1000)
+                            },2000)
                         }).catch(err=>{
-                            alert(err)
+                            MessageBox.alert({err},'登录失败！',{
+                                confirmButtonText:'确定',
+                                type:"error",
+                                callback:action => {
+                                    this.$router.replace('/login')
+                                }
+                            })
+                            setTimeout(()=>{
+                                MessageBox.close();
+                                this.$router.replace('/login')
+                            },2000)
                         })
                     }else{
                         console.log('请求登录失败');

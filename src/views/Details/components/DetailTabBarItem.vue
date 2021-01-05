@@ -23,6 +23,7 @@
 
 <script>
     import {request} from "../../../network";
+    import {MessageBox} from "element-ui";
 
     export default {
         name: "DetailTabBarItem",
@@ -104,9 +105,16 @@
                     if(res.flag){
                         console.log('添加购物车操作成功');
                         //    弹窗确认是否支付
-                        alert('加入购物车成功')
+                        MessageBox.alert('加入购物车成功')
+                        setTimeout(() => {
+                            MessageBox.close();
+                        }, 600);
                     }else{
                         console.log('添加购物车操作失败.then');
+                        MessageBox.alert('添加购物车操作失败')
+                        setTimeout(() => {
+                            MessageBox.close();
+                        }, 600);
                     }
                     // 短暂alert()
                 }).catch(err=>{
