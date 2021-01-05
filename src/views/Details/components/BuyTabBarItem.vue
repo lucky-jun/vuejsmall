@@ -1,9 +1,9 @@
 <template>
     <div id="BuyTabBarItem" class="GongGong">
         <!--        图片-->
-        <div id="picture" class="GongGong" @click="GoodsDetails"><slot name="item-picture"></slot></div>
+        <div id="picture" class="GongGong"><slot name="item-picture"></slot></div>
         <!--        名字-->
-        <div id="name" class="GongGong" @click="GoodsDetails"><slot name="item-name"></slot></div>
+        <div id="name" class="GongGong"><slot name="item-name"></slot></div>
         <!--        价格-->
         <div id="price" class="GongGong"><slot name="item-price"></slot></div>
         <!--        数量-->
@@ -37,6 +37,10 @@
         justify-content: space-between;
         display: flex;
         margin-bottom: 10px;
+    }
+    #BuyTabBarItem img{
+        width: 100%;
+        height: 100%;
     }
     #picture{
         height: 100%;

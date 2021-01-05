@@ -10,9 +10,7 @@
     export default {
         name: "HomeTabBarItem",
         props:{
-            goods1:{
-                type:Array
-            },
+            goods1:Array,
             index1:Number
         },
         data(){
@@ -23,12 +21,17 @@
         methods:{
             divDetails(){
                 console.log('点击了商品，即将跳转详情页');
-                console.log('点击了商品ID:'+this.goods[this.index1].id);
+                console.log('点击了商品ID:'+this.goods[this.index1].goo_id);
                 //跳转商品详情页
-                this.$router.push({path:'/details',query:{goodsName:this.goods[this.index1].name,goodsId: this.goods[this.index1].id}})
+                this.$router.push({path:'/details',query:{goodsName:this.goods[this.index1].goo_name,goodsId: this.goods[this.index1].goo_id}})
 
                 //按id获取商品详情
                 // this.$router.push()
+            }
+        },
+        watch:{
+            goods1(val){
+                this.goods = this.goods1
             }
         }
 

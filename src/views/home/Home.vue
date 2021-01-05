@@ -312,6 +312,7 @@ export default {
                   number:4,
               }
           ]
+          // goods:[{}]
       }
     },
     methods:{
@@ -331,6 +332,30 @@ export default {
                 console.log('请求商品下一页失败');
             })
         }
+    },
+    created() {
+        console.log('请求首页数据');
+        request({
+            url:'/queryGoodsPage.do',
+            method:'post',
+            data:{
+                page:0,
+                limit:40
+            }
+        }).then(res=>{
+            console.log(res);
+            console.log("111111111111")
+            console.log(res.data);
+            console.log("11:"+this.goods[0].name);
+            // this.goods =JSON.stringify(res.data)
+            this.goods =res.data
+            // console.log(JSON.stringify(this.goods), this.goods)
+            console.log("2222222")
+            console.log("22:"+this.goods[0].goo_name);
+            console.log(this.goods.length);
+        }).catch(err=>{
+            console.log(err);
+        })
     }
 }
 </script>

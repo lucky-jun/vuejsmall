@@ -28,7 +28,11 @@
         name: "DetailTabBarItem",
         props:{
             goods1:{
-                type:Array
+                id:5,
+                img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
+                name:'商品5',
+                price:23.1,
+                number:1,
             }
         },
         // props:{
@@ -36,8 +40,13 @@
         // },
         data(){
             return{
+                // goods:[{}],
                 goods:this.goods1,
-                xxxx:[1,2,3,4,5]
+                xxxx:[1,2,3,4,5],
+                goods2:[{
+                    goodsId:'',
+                    goodsNumber:1
+                }]
             }
         },
         methods:{
@@ -85,7 +94,7 @@
                     url:'/insertToCart.do',
                     method:'post',
                     data:{
-                        goodsId:this.goods[0].id,
+                        goodsId:this.goods1.goo_id,
                         userId:sessionStorage.getItem('userID'),
                         goodsNumber:1
                     }
@@ -94,6 +103,8 @@
                     console.log(res.flag);
                     if(res.flag){
                         console.log('添加购物车操作成功');
+                        //    弹窗确认是否支付
+                        alert('加入购物车成功')
                     }else{
                         console.log('添加购物车操作失败.then');
                     }
@@ -106,9 +117,30 @@
             buy(){
                 console.log('即将跳转购买界面');
                 //    跳转购买界面
-                    this.$router.push({path:'/buygoods',query:{goods:this.goods}})
+                //     this.$router.push({path:'/buygoods',query:{goods:JSON.stringify(this.goods1)}})
+                this.goods[0].number = 1;
+                console.log(this.goods);
+                // Object转换数组
+                // var arr = [];
+                // for(var key in this.goods){
+                //     if(!this.goods.hasOwnProperty(key)){
+                //         continue;
+                //     }
+                //     var item = {};
+                //     item[key] = this.goods[key];
+                //     arr.push(item);
+                // }
+                // console.log("----------------------")
+                // console.log(arr)
+                this.$router.push({path:'/buygoods',query:{goods:this.goods}})
             }
         },
+        watch:{
+            goods1(val){
+                this.goods[0] = val
+                console.log(this.goods);
+            }
+        }
     }
 </script>
 

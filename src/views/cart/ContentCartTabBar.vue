@@ -39,9 +39,7 @@
     export default {
         name: "ContentCartTabBar",
         props:{
-            goods1:{
-                type:Array
-            }
+            goods1:Object
         },
         data(){
             return{

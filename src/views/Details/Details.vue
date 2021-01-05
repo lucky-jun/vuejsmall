@@ -50,9 +50,11 @@
                         goodsId:this.$route.query.goodsId
                     }
                 }).then(res=>{
+                    console.log('3333');
                     console.log(res)
+                    console.log(res.data)
                     this.goods=res.data
-                }).then(err=>{
+                }).catch(err=>{
                     console.log(err);
                     console.log('获取商品详情发生错误')
                 })

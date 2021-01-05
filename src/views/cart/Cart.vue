@@ -24,50 +24,51 @@
         name: "Cart",
         data(){
             return{
-                goods:[
-                    {
-                        id:1,
-                        img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
-                        name:'商品1',
-                        price:111.1,
-                        number:13,
-                    },
-                    {
-                        id:2,
-                        img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
-                        name:'商品2',
-                        price:222.1,
-                        number:55,
-                    },
-                    {
-                        id:3,
-                        img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
-                        name:'商品3',
-                        price:333.1,
-                        number:342,
-                    },
-                    {
-                        id:4,
-                        img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
-                        name:'商品4',
-                        price:44.1,
-                        number:6,
-                    },
-                    {
-                        id:5,
-                        img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
-                        name:'商品5',
-                        price:23.1,
-                        number:1,
-                    },
-                    {
-                        id:61,
-                        img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
-                        name:'商品61',
-                        price:66.1,
-                        number:4,
-                    }
-                ],
+                // goods:[
+                //     {
+                //         id:1,
+                //         img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
+                //         name:'商品1',
+                //         price:111.1,
+                //         number:13,
+                //     },
+                //     {
+                //         id:2,
+                //         img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
+                //         name:'商品2',
+                //         price:222.1,
+                //         number:55,
+                //     },
+                //     {
+                //         id:3,
+                //         img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
+                //         name:'商品3',
+                //         price:333.1,
+                //         number:342,
+                //     },
+                //     {
+                //         id:4,
+                //         img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
+                //         name:'商品4',
+                //         price:44.1,
+                //         number:6,
+                //     },
+                //     {
+                //         id:5,
+                //         img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
+                //         name:'商品5',
+                //         price:23.1,
+                //         number:1,
+                //     },
+                //     {
+                //         id:61,
+                //         img:"//img10.360buyimg.com/seckillcms/s250x250_jfs/t1/151148/36/13226/146005/5feb0c7aE08af0da9/fd628191f0e43cf5.jpg",
+                //         name:'商品61',
+                //         price:66.1,
+                //         number:4,
+                //     }
+                // ],
+                goods:Object
             }
         },
         components:{
@@ -91,9 +92,31 @@
             console.log('创建购物车列表');
             request({
                 url:'/queryToCart.do',
+                method:'post',
+                data:{
+                    userID:6
+                }
             }).then(res=>{
+                console.log('哈哈哈哈哈');
                 console.log(res);
                 this.goods=res.data
+                console.log(res.data);
+                console.log(this.goods);
+
+                var arr = [];
+                for(var key in res.data){
+                    if(!res.data.hasOwnProperty(key)){
+                        continue;
+                    }
+                    var item = {};
+                    item[key] = res.data[key];
+                    arr.push(item);
+                }
+                console.log("----------------------")
+                console.log(arr)
+
+
+
             }).catch(err=>{
                 console.log(err);
                 console.log('请求购物车列表失败');

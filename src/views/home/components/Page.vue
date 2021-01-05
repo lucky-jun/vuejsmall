@@ -6,7 +6,7 @@
                 :current-page.sync="currentPage1"
                 :page-size="40"
                 layout="total, prev, pager, next"
-                :total="size">
+                :total="length">
         </el-pagination>
     </div>
 </template>

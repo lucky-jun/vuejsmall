@@ -9,7 +9,8 @@ const store = new Vuex.Store({
   state: {
     user:[{userID: '',power: '',sessionID:''}],
       Sumprice:0,
-      checkboxGoods:Array
+      checkboxGoods:Array,
+      goods:[{}]
   },
   mutations: {
       // 登录后记录登录状态

@@ -34,7 +34,7 @@ export function request(config) {
         return res.data
     },error => {
         console.log("响应拦截失败"+error);
-        console.log(error.substring(0,20));
+        // console.log(error.substring(0,20));
         console.log(error);
         if(error==='Error: timeout of 5000ms exceeded'){
             alert('连接超时')

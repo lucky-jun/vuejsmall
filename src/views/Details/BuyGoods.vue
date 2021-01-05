@@ -6,9 +6,9 @@
     <buy-tab-bar>
         <div slot="goods">
             <buy-tab-bar-item v-for="(i,index) in goods">
-                <img slot="item-picture" :src="i.img" alt="图片">
-                <span slot="item-name">{{i.name}}</span>
-                <span slot="item-price">价格：{{i.price|sumPrice}}</span>
+                <img slot="item-picture"  :src="i.goo_image" alt="图片">
+                <span slot="item-name">{{i.goo_name}}</span>
+                <span slot="item-price">价格：{{i.goo_selling_price|sumPrice}}</span>
                 <span slot="item-number">数量：{{i.number}}</span>
             </buy-tab-bar-item>
             <div>
@@ -34,16 +34,45 @@
             BuyTabBar,
             BuyTabBarItem
         },
-        data:{
-          goods:this.$route.query.goods
+        data(){
+            return{
+                goods:this.$route.query.goods,
+                // goods2:this.$store.state.goods
+                goodsInf:[{
+                    goo_id:'',
+                    number:'',
+                    sump:''
+                }],
+            }
         },
         computed:{
             sumprice(){
-                let sum=0
-                for(let item of this.goods){
-                    sum+=item.price*item.number
-                }
-                return sum
+                    let sum=0
+                    // console.log(this.goods.goo_selling_price);
+                    // console.log(this.goods.number);
+                    // console.log(this.goods)
+                    // console.log(this.goods.length)
+
+                    for(let item of this.goods){
+                        console.log('asdfalsdjfalk')
+                        console.log(item);
+                        console.log(item.goo_selling_price);
+                        console.log(item.number);
+                        console.log(sum)
+
+                            let i=0;
+                            this.goodsInf[i].goo_id = item.goo_id
+                            this.goodsInf[i].number = item.number
+
+                        sum+=item.goo_selling_price*item.number
+                        this.goodsInf[i].sump = sum
+                        i++
+                        console.log(sum)
+                    }
+
+                    console.log("444444444444444444444444444")
+                    console.log(this.goodsInf);
+                    return sum
             }
         },
         methods:{
@@ -57,41 +86,53 @@
                     url:'/insertToMyOrder.do',
                     method:'post',
                     data: {
-                        goods:this.goods,
-                        userId:sessionStorage.getItem('userID')
+                        goods:this.goodsInf,
+                        userId:sessionStorage.getItem('userID'),
                     }
                 }).then(res=>{
                     console.log(res);
                     console.log(res.flag);
                     console.log(res.MyOrderId);
                     console.log('请求提交成功');
+                    //判断成功与否弹窗确认
                     if(res.flag){
-                    //    弹窗确认是否支付
-                        MessageBox('支付订单?', '提示', {
-                            confirmButtonText: '立即支付',
-                            cancelButtonText: '稍后支付',
-                            type: 'warning'
-                        }).then(() => {
-                            //确认支付订单，修改订单的信息为已支付
-                            request({
-                                url:'/updateMyOrderToPay.do',
-                                method:'post',
-                                data:{
-                                    MyOrderId:res.MyOrderId,
-                                    userId:sessionStorage.getItem('userID')
-                                }
-                            }).then(res=>{
-                                console.log(res);
-                                console.log(res.flag);
-                                if(res.flag){
-                                    this.$router.replace('/paymentsuccessful')
-                                }else{
-                                    this.$router.replace('/paymentfailed')
-                                }
-                            })
-                        }).catch(()=>{
-                            this.$router.replace('/profile')
+
+                        this.$confirm("是否删除该公司?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        }).then(res=>{
+                            console.log('then');
+                        }).catch(err=>{
+                            console.log('err');
                         })
+
+                    //    弹窗确认是否支付
+                    //     MessageBox('支付订单?', '提示', {
+                    //         confirmButtonText: '立即支付',
+                    //         cancelButtonText: '稍后支付',
+                    //         type: 'warning'
+                    //     }).then(() => {
+                    //         //确认支付订单，修改订单的信息为已支付
+                    //         request({
+                    //             url:'/updateMyOrderToPay.do',
+                    //             method:'post',
+                    //             data:{
+                    //                 MyOrderId:res.MyOrderId,
+                    //                 userId:sessionStorage.getItem('userID')
+                    //             }
+                    //         }).then(res=>{
+                    //             console.log(res);
+                    //             console.log(res.flag);
+                    //             if(res.flag){
+                    //                 this.$router.replace('/paymentsuccessful')
+                    //             }else{
+                    //                 this.$router.replace('/paymentfailed')
+                    //             }
+                    //         })
+                    //     }).catch(()=>{
+                    //         this.$router.replace('/profile')
+                    //     })
                     }
                 })
             }
@@ -101,25 +142,49 @@
             sumPrice(price){
                 return '￥'+price.toFixed(2)
             }
-        }
+        },
     //    获取商品ID进行展示点击购买,
-    //     created() {
-    //         request({
-    //             url:'/queryGoodsByManyId.do',
-    //             method:'post',
-    //             data:{
-    //                 goodsId:this.$route.query.goodsId
-    //             }
-    //         }).then(res=>{
-    //             console.log(res);
-    //             console.log(res.data);
-    //             this.goods = res.data
-    //             console.log('请求数据成功');
-    //         }).catch(err=>{
-    //             console.log(err);
-    //             console.log('请求数据失败');
-    //         })
-    //     }
+        created() {
+            console.log('-----------')
+            // console.log(this.$route.query.goods);
+            // console.log(this.$route.query.goods[0]);
+            this.goods =this.$route.query.goods;
+            console.log(this.goods);
+            // console.log(this.goods.goo_image);
+            // console.log(JSON.parse(this.$route.query.goods).goo_image);
+            // console.log(this.$route.query.goods.goo_selling_price);
+            // console.log(this.$route.query.goods.number);
+            console.log('-----------')
+
+
+            // request({
+            //     url:'/queryGoodsByManyId.do',
+            //     method:'post',
+            //     data:{
+            //         goodsId:this.$route.query.goodsId
+            //     }
+            // }).then(res=>{
+            //     console.log(res);
+            //     console.log(res.data);
+            //     this.goods = res.data
+            //     console.log('请求数据成功');
+            // }).catch(err=>{
+            //     console.log(err);
+            //     console.log('请求数据失败');
+            // })
+        },
+        watch:{
+            goods(val){
+                    for(let item of this.goods){
+                        let i=0;
+                        this.goodsInf[i].goo_id = item.goo_id
+                        this.goodsInf[i].goo_number = item.number
+                        i++
+                    }
+                    console.log("444444444444444444444444444")
+                    console.log(this.goodsInf);
+            }
+        }
     }
 </script>
 
