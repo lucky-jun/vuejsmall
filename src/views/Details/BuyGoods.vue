@@ -8,11 +8,11 @@
             <buy-tab-bar-item v-for="(i,index) in goods">
                 <img slot="item-picture"  :src="i.goo_image" alt="图片">
                 <span slot="item-name">{{i.goo_name}}</span>
-                <span slot="item-price">价格：{{i.goo_selling_price|sumPrice}}</span>
-                <span slot="item-number">数量：{{i.number}}</span>
+                <span slot="item-price">商品单价：{{i.goo_selling_price|sumPrice}}</span>
+                <span slot="item-number">购买数量：{{i.number}}</span>
             </buy-tab-bar-item>
             <div>
-                <span>总价：{{sumprice|sumPrice}}</span>
+                <span>订单总价：{{sumprice|sumPrice}}</span>
             </div>
         </div>
         <div slot="option">
@@ -40,11 +40,12 @@
             return{
                 goods:this.$route.query.goods,
                 // goods2:this.$store.state.goods
-                goodsInf:[{
-                    goo_id:'',
-                    number:'',
-                    sump:''
-                }],
+                // goodsInf:[{
+                //     goo_id:'',
+                //     number:'',
+                //     sump:''
+                // }],
+                goodsInf:[],
             }
         },
         computed:{
@@ -55,21 +56,26 @@
                     // console.log(this.goods)
                     // console.log(this.goods.length)
 
-                    for(let item of this.goods){
-                        console.log('asdfalsdjfalk')
-                        console.log(item);
-                        console.log(item.goo_selling_price);
-                        console.log(item.number);
-                        console.log(sum)
-
-                            let i=0;
-                            this.goodsInf[i].goo_id = item.goo_id
-                            this.goodsInf[i].number = item.number
-
-                        sum+=item.goo_selling_price*item.number
-                        this.goodsInf[i].sump = sum
-                        i++
-                        console.log(sum)
+                console.log("11111")
+                console.log(this.goodsInf)
+                    this.goodsInf = this.goods
+                console.log(this.goodsInf)
+                    //
+                    for(let i in this.goods){
+                    //     console.log('asdfalsdjfalk')
+                    //     console.log(this.goods[i]);
+                    //     console.log(this.goods[i].goo_selling_price);
+                    //     console.log(this.goods[i].number);
+                    //     console.log(sum)
+                    //
+                    //
+                    //         this.goodsInf[i].goo_id = this.goods[i].goo_id
+                    //         this.goodsInf[i].number = this.goods[i].number
+                        sum+=this.goods[i].goo_selling_price*this.goods[i].number
+                        this.goodsInf[i].sump = this.goods[i].goo_selling_price*this.goods[i].number
+                    //     console.log(sum)
+                    //     console.log(this.goodsInf)
+                    //
                     }
 
                     console.log("444444444444444444444444444")

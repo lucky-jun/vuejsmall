@@ -2,10 +2,13 @@
     <div class="cart">
 <!--        <h1>购物车</h1>-->
 <!--        <item></item>-->
-        <div class="Center">
+        <div v-if="goods.length>0" class="Center">
             <content-cart-tab-bar :goods1="goods" @getGoodsId="getGoodsId"></content-cart-tab-bar>
 
 <!--            <confirm></confirm>-->
+        </div>
+        <div v-else class="Center">
+           <h1>未加入商品进入购物车</h1>
         </div>
     </div>
 </template>
@@ -68,7 +71,7 @@
                 //         number:4,
                 //     }
                 // ],
-                goods:Object
+                goods:[]
             }
         },
         components:{
@@ -90,37 +93,49 @@
         },
         created() {
             console.log('创建购物车列表');
-            request({
-                url:'/queryToCart.do',
-                method:'post',
-                data:{
-                    userID:6
-                }
-            }).then(res=>{
-                console.log('哈哈哈哈哈');
-                console.log(res);
-                this.goods=res.data
-                console.log(res.data);
-                console.log(this.goods);
-
-                var arr = [];
-                for(var key in res.data){
-                    if(!res.data.hasOwnProperty(key)){
-                        continue;
+            if(sessionStorage.getItem("userID")!=null){
+                request({
+                    url:'/queryToCart.do',
+                    method:'post',
+                    data:{
+                        userID:sessionStorage.getItem("userID")
                     }
-                    var item = {};
-                    item[key] = res.data[key];
-                    arr.push(item);
-                }
-                console.log("----------------------")
-                console.log(arr)
+                }).then(res=>{
+                    console.log('哈哈哈哈哈');
+                    console.log(res);
+                    this.goods=res.data
+                    console.log(res.data);
+                    console.log(this.goods);
+                    for(let i in res.data){
+                        console.log("------："+i);
+                        // console.log(res.data[i]);
+                        // this.goods[i] = res.data[i]
+                        // console.log(this.goods);
+                    }
+                    console.log("this.goods:")
+                    console.log(this.goods)
+
+                    // var arr = [];
+                    // for(var key in res.data){
+                    //     if(!res.data.hasOwnProperty(key)){
+                    //         continue;
+                    //     }
+                    //     var item = {};
+                    //     item[key] = res.data[key];
+                    //     arr.push(item);
+                    // }
+                    // console.log("----------------------")
+                    // console.log(arr)
 
 
 
-            }).catch(err=>{
-                console.log(err);
-                console.log('请求购物车列表失败');
-            })
+                }).catch(err=>{
+                    console.log(err);
+                    console.log('请求购物车列表失败');
+                })
+            }else{
+                this.$router.replace('/login')
+            }
         }
     }
 </script>

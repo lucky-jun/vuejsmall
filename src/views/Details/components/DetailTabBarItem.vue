@@ -90,57 +90,67 @@
                 //     } )
                 // ]).then().catch()
 
+                console.log(sessionStorage.getItem('userID') === null);
+                console.log(sessionStorage.getItem('userID') == null);
+                if(sessionStorage.getItem('userID')!=null){
+                    request({
+                        url:'/insertToCart.do',
+                        method:'post',
+                        data:{
+                            goodsId:this.goods1.goo_id,
+                            userId:sessionStorage.getItem('userID'),
+                            goodsNumber:1
+                        }
+                    }).then(res=>{
+                        console.log(res);
+                        console.log(res.flag);
+                        if(res.flag){
+                            console.log('添加购物车操作成功');
+                            //    弹窗确认是否支付
+                            MessageBox.alert('加入购物车成功')
+                            setTimeout(() => {
+                                MessageBox.close();
+                            }, 600);
+                        }else{
+                            console.log('添加购物车操作失败.then');
+                            MessageBox.alert('添加购物车操作失败')
+                            setTimeout(() => {
+                                MessageBox.close();
+                            }, 600);
+                        }
+                        // 短暂alert()
+                    }).catch(err=>{
+                        console.log(err);
+                        console.log('添加购物车操作失败.catch');
+                    })
+                }else{
+                    this.$router.push('/login')
+                }
 
-                request({
-                    url:'/insertToCart.do',
-                    method:'post',
-                    data:{
-                        goodsId:this.goods1.goo_id,
-                        userId:sessionStorage.getItem('userID'),
-                        goodsNumber:1
-                    }
-                }).then(res=>{
-                    console.log(res);
-                    console.log(res.flag);
-                    if(res.flag){
-                        console.log('添加购物车操作成功');
-                        //    弹窗确认是否支付
-                        MessageBox.alert('加入购物车成功')
-                        setTimeout(() => {
-                            MessageBox.close();
-                        }, 600);
-                    }else{
-                        console.log('添加购物车操作失败.then');
-                        MessageBox.alert('添加购物车操作失败')
-                        setTimeout(() => {
-                            MessageBox.close();
-                        }, 600);
-                    }
-                    // 短暂alert()
-                }).catch(err=>{
-                    console.log(err);
-                    console.log('添加购物车操作失败.catch');
-                })
             },
             buy(){
-                console.log('即将跳转购买界面');
-                //    跳转购买界面
-                //     this.$router.push({path:'/buygoods',query:{goods:JSON.stringify(this.goods1)}})
-                this.goods[0].number = 1;
-                console.log(this.goods);
-                // Object转换数组
-                // var arr = [];
-                // for(var key in this.goods){
-                //     if(!this.goods.hasOwnProperty(key)){
-                //         continue;
-                //     }
-                //     var item = {};
-                //     item[key] = this.goods[key];
-                //     arr.push(item);
-                // }
-                // console.log("----------------------")
-                // console.log(arr)
-                this.$router.push({path:'/buygoods',query:{goods:this.goods}})
+                if(sessionStorage.getItem('userID')!=null){
+                    console.log('即将跳转购买界面');
+                    //    跳转购买界面
+                    //     this.$router.push({path:'/buygoods',query:{goods:JSON.stringify(this.goods1)}})
+                    this.goods[0].number = 1;
+                    console.log(this.goods);
+                    // Object转换数组
+                    // var arr = [];
+                    // for(var key in this.goods){
+                    //     if(!this.goods.hasOwnProperty(key)){
+                    //         continue;
+                    //     }
+                    //     var item = {};
+                    //     item[key] = this.goods[key];
+                    //     arr.push(item);
+                    // }
+                    // console.log("----------------------")
+                    // console.log(arr)
+                    this.$router.push({path:'/buygoods',query:{goods:this.goods}})
+                }else{
+                    this.$router.push('/login')
+                }
             }
         },
         watch:{

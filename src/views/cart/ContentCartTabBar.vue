@@ -12,8 +12,8 @@
                 <cart-tab-bar-item v-for="(i,index) in goods" :goods="goods" :index="index">
                     <!--                <el-checkbox slot="item-choice" ></el-checkbox>-->
                     <input slot="item-choice" type="checkbox" :value="i" v-model="goodsCheckBox"></input>
-                    <img slot="item-picture" :src="i.img" alt="图片">
-                    <div slot="item-name">{{i.name}}</div>
+                    <img slot="item-picture" :src="i.goo_image" alt="图片">
+                    <div slot="item-name">{{i.goo_name}}</div>
                     <div slot="item-price">{{sumprice(index)}}</div>
                     <div slot="item-number">
                         <button  @click="decrementBtn(index)" :disabled="i.number<=1">-</button>
@@ -36,10 +36,16 @@
 <script>
     import CartTabBar from "./components/CartTabBar";
     import CartTabBarItem from "./components/CartTabBarItem";
+    import {MessageBox} from "element-ui"
+
     export default {
         name: "ContentCartTabBar",
         props:{
-            goods1:Object
+            goods1: {
+                type:Array,
+                default:()=>{}
+            }
+            // goods1:Object
         },
         data(){
             return{
@@ -48,12 +54,38 @@
                 goodsId:[]
             }
         },
+        watch:{
+            goods1(newValue,oldValue){
+                console.log("2222222222")
+                console.log(newValue)
+                console.log(oldValue)
+                this.goods= newValue
+                // this.goods = this.goods1
+            }
+        },
+        created() {
+            console.log('3333333333')
+            console.log(this.goods);
+                console.log(this.goods1)
+        //     this.goods = JSON.parse(JSON.stringify(this.goods1))
+        //     console.log(this.goods);
+        //     console.log(this.goods1.length)
+        //     console.log(JSON.stringify(this.goods1))
+        //     console.log(JSON.stringify(this.goods1))
+        //     console.log(JSON.parse(JSON.stringify(this.goods1)))
+        //     for(let i in JSON.parse(JSON.stringify(this.goods1))){
+        //         this.goods[i]= this.goods1[i]
+        //         console.log("==========")
+        //         // console.log(this.goods);
+        //     }
+        //     console.log(this.goods)
+        },
         computed:{
             sum(){
                 //将点击勾选的商品加入数组中，然后获取数组中的商品的价格计算出来
                 let SumPrice=0
                 SumPrice=this.goodsCheckBox.reduce(function(pre,goods){
-                    return pre + goods.price * goods.number
+                    return pre + goods.goo_selling_price * goods.number
                 },0)
                 // console.log("reduce简写："+SumPrice);
                 return SumPrice;
@@ -70,7 +102,7 @@
                 // this.$router.push()
             },
             sumprice(index){
-                return (this.goods[index].number*this.goods[index].price).toFixed(2)
+                return (this.goods[index].number*this.goods[index].goo_selling_price).toFixed(2)
             },
             decrementBtn(index){
                 if(this.goods[index].number<=1){
@@ -85,10 +117,31 @@
             },
             PaySum(){
                 // console.log(this.goodsCheckBox)
-                for(let item of this.goodsCheckBox){
-                    this.goodsId.push(item.id)
+                // for(let item of this.goodsCheckBox){
+                //     this.goodsId.push(item.id)
+                // }
+                // console.log(this.goodsId);
+                console.log(this.goodsCheckBox);
+                // for(let i in this.goodsCheckBox){
+                //     this.toOrder[i].goo_id = this.goodsCheckBox[i].goodsId
+                //     this.toOrder[i].goo_image = this.goodsCheckBox[i].img
+                //     this.toOrder[i].goo_name = this.goodsCheckBox[i].name
+                //     this.toOrder[i].goo_selling_price = this.goodsCheckBox[i].price
+                //     this.toOrder[i].goo_stock = this.goodsCheckBox[i].goo_stock
+                //     this.toOrder[i].number = this.goodsCheckBox[i].number
+                //     this.toOrder[i].userId = this.goodsCheckBox[i].userId
+                // }
+
+                console.log("this.toOrder");
+                // console.log(this.toOrder);
+                console.log(this.goodsCheckBox.length);
+                console.log(this.goodsCheckBox.length>0);
+                if(this.goodsCheckBox.length>0){
+                    this.$router.push({path:'/buygoods',query:{goods:this.goodsCheckBox}})
+                }else{
+                    MessageBox.alert('未选择商品')
+                    setTimeout(()=>{MessageBox.close()},1000)
                 }
-                console.log(this.goodsId);
             }
         },
         filters:{

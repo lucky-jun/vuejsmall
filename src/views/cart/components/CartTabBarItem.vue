@@ -32,9 +32,10 @@
         props:{
             index:Number,
             // id:Number
-            goods:{
-                type:Array
-            }
+            // goods:{
+            //     type:Array
+            // }
+            goods: [Array,Object]
         },
         data(){
             return{
