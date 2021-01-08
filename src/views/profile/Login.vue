@@ -67,6 +67,8 @@
                 // }).catch(function (error) {
                 //     console.log(error)
                 // })
+                console.log('username:'+this.loginForm.username)
+                console.log('password:'+this.loginForm.password)
                 request({
                     url:'/login.action',
                     method:'post',
@@ -78,6 +80,8 @@
                     // console.log("请求到界面的数据"+res);
                     // console.log("请求到界面的数据"+res.data.flag);
                     console.log("请求到界面的数据flag:"+res.flag);
+                    console.log("请求成功："+res);
+
 
                     if(res.flag){
                         console.log('请求登录成功');

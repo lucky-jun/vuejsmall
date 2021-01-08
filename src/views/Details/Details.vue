@@ -38,6 +38,8 @@
         },
         created() {
             console.log('进入详情页1')
+            console.log('请求参数goodsId：'+this.$route.query.goodsId)
+
             console.log(this.$route.query.goodsId===undefined);
             if(this.$route.query.goodsId===undefined){
                 this.isActive = false
@@ -51,7 +53,7 @@
                     }
                 }).then(res=>{
                     console.log('3333');
-                    console.log(res)
+                    console.log("请求成功："+res)
                     console.log(res.data)
                     this.goods=res.data
                 }).catch(err=>{

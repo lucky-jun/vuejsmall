@@ -335,6 +335,8 @@ export default {
     },
     created() {
         console.log('请求首页数据');
+        console.log('请求首页数据');
+
         request({
             url:'/queryGoodsPage.do',
             method:'post',
@@ -343,6 +345,7 @@ export default {
                 limit:40
             }
         }).then(res=>{
+            console.log("请求成功："+res);
             console.log(res);
             console.log("111111111111")
             console.log(res.data);

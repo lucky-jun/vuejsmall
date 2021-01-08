@@ -219,6 +219,19 @@
         methods: {
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
+                    console.log('username:'+this.ruleForm.username)
+                    console.log('pass:'+this.ruleForm.pass)
+                    console.log('checkPass:'+ this.ruleForm.checkPass)
+                    console.log('question_one:'+this.ruleForm.question_one)
+                    console.log('question_one_key:'+this.ruleForm.question_one_key)
+                    console.log('question_two:'+this.ruleForm.question_two)
+                    console.log('question_two_key:'+this.ruleForm.question_two_key)
+                    console.log('name:'+this.ruleForm.name)
+                    console.log('gender:'+this.ruleForm.gender)
+                    console.log('uuid:'+this.ruleForm.uuid)
+                    console.log('tel_number:'+this.ruleForm.tel_number)
+                    console.log('address:'+this.ruleForm.address)
+                    console.log('depid:'+this.ruleForm.depid)
                     if (valid) {
                         // alert('submit!');
                         request({
@@ -229,6 +242,7 @@
                                 pass: this.ruleForm.pass,
                                 checkPass: this.ruleForm.checkPass,
                                 question_one:this.ruleForm.question_one,
+                                question_one_key:this.ruleForm.question_one_key,
                                 question_two:this.ruleForm.question_two,
                                 question_two_key:this.ruleForm.question_two_key,
                                 //个人信息表
@@ -242,6 +256,7 @@
                                 depid:this.ruleForm.depid
                             }
                         }).then(res=>{
+                            console.log("请求成功："+res);
                             console.log("登录返回的值："+res);
                             if(res){
                                 this.$router.replace('/home')

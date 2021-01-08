@@ -93,6 +93,7 @@
         },
         created() {
             console.log('创建购物车列表');
+            console.log('请求参数userID：'+sessionStorage.getItem("userID"));
             if(sessionStorage.getItem("userID")!=null){
                 request({
                     url:'/queryToCart.do',
@@ -102,7 +103,7 @@
                     }
                 }).then(res=>{
                     console.log('哈哈哈哈哈');
-                    console.log(res);
+                    console.log('请求成功：'+res);
                     this.goods=res.data
                     console.log(res.data);
                     console.log(this.goods);

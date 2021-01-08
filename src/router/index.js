@@ -12,6 +12,7 @@ const Details = ()=>import('../views/Details/Details')
 const BuyGoods = ()=>import('../views/Details/BuyGoods')
 const PaymentSuccessful = ()=>import('../views/Buy/PaymentSuccessful')
 const PaymentFailed = ()=>import('../views/Buy/PaymentFailed')
+const MyOrder = ()=>import('../views/profile/Myorder/MyOrder')
 
 //安装插件
 Vue.use(VueRouter)
@@ -101,6 +102,11 @@ const routes = [
   //  支付失败
     path: '/paymentfailed',
     component:PaymentFailed
+  },
+  {
+    // 我的订单
+    path: '/myorder',
+    component:MyOrder
   }
 ]
 

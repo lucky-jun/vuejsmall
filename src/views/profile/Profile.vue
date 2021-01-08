@@ -4,6 +4,8 @@
 <!--        <router-link to="/login" tag="button">登录</router-link>-->
 <!--        <router-link to="/regist" tag="button">注册</router-link>-->
         <button @click="exitBtn">退出</button>
+        <button @click="MyOrderBtn">我的订单</button>
+        <button @click="HistoryOrderBtn">历史订单</button>
         <router-view></router-view>
     </div>
 </template>
@@ -35,6 +37,15 @@
                         console.log(2);
                     }
                 });
+            },
+            MyOrderBtn(){
+                this.$router.push('/myorder')
+            },
+            HistoryOrderBtn(){
+                MessageBox.alert('功能未开发，敬请期待！')
+                setTimeout(()=>{
+                    MessageBox.close()
+                },1000)
             }
         }
     }

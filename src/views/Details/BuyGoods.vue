@@ -90,6 +90,8 @@
             },
             //提交按钮
             submitBtn(){
+                console.log('请求参数goods:' + this.goodsInf);
+                console.log('请求参数userId:' + sessionStorage.getItem('userID'));
                 request({
                     url:'/insertToMyOrder.do',
                     method:'post',
@@ -98,7 +100,7 @@
                         userId:sessionStorage.getItem('userID'),
                     }
                 }).then(res=>{
-                    console.log(res);
+                    console.log("请求成功："+res);
                     console.log(res.flag);
                     console.log(res.MyOrderId);
                     this.$store.commit({type:'setWaitOrderId',waitOrderId:res.MyOrderId})
@@ -114,6 +116,9 @@
                         }).then(res=>{
                             console.log(res);
                             console.log('then');
+                            console.log('请求参数OrderId：' + this.$store.getters.getWaitOrderId);
+                            console.log('请求参数payState：' + '支付成功');
+                            console.log('请求参数orderState：' + '等待发货');
                             request({
                                 url:'/updateMyOrderToPay.do',
                                 method: 'post',
@@ -123,7 +128,7 @@
                                     orderState:'等待发货'
                                 }
                             }).then(res=>{
-                                console.log(res);
+                                console.log('请求成功:'+res);
                                 MessageBox.alert('正在支付，请稍后。。。')
                                 setTimeout(()=>{
                                     MessageBox.close();

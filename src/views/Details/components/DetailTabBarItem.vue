@@ -92,6 +92,10 @@
 
                 console.log(sessionStorage.getItem('userID') === null);
                 console.log(sessionStorage.getItem('userID') == null);
+                console.log('请求参数goodsId：'+this.goods1.goo_id);
+                console.log('请求参数userId：'+sessionStorage.getItem('userID'));
+                console.log('请求参数goodsNumber：'+1);
+
                 if(sessionStorage.getItem('userID')!=null){
                     request({
                         url:'/insertToCart.do',
@@ -102,7 +106,7 @@
                             goodsNumber:1
                         }
                     }).then(res=>{
-                        console.log(res);
+                        console.log("请求成功："+res);
                         console.log(res.flag);
                         if(res.flag){
                             console.log('添加购物车操作成功');
