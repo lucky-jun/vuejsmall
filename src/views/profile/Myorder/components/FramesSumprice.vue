@@ -1,6 +1,6 @@
 <template>
     <div id="sumprice">
-        <span id="price">订单总价：￥{{sumprice}}元</span>
+        <span id="price">订单总价：￥{{sumprice.toFixed(2)}}元</span>
         <span id="time">订单创建时间：{{createtime}}</span>
     </div>
 </template>

@@ -11,12 +11,15 @@
                 </frames-item>
             </div>
             <div slot="other">
-                <frames-sumprice :sumPrice="sumPrice" :createTime="i[0].creattime"></frames-sumprice>
+                <frames-sumprice :sumPrice="sumPrice(index)" :createTime="i[0].creattime"></frames-sumprice>
 <!--                <frames-sumprice></frames-sumprice>-->
             </div>
             <div slot="button">
-<!--                <frames-button :paystate="i[0][0].paystate" :orderstate="i[0][0].orderstate"></frames-button>-->
-                <frames-button></frames-button>
+<!--                <frames-button :paystate="i[index].paystate" :orderstate="i[index].orderstate"></frames-button>-->
+                <frames-button :paystate="i[0].paystate" :orderstate="i[0].orderstate" :keys="Object.keys(goods)"></frames-button>
+<!--                <h3>{{i[index]}}</h3>-->
+<!--                <h3>{{i[index].orderstate}}</h3>-->
+<!--                <frames-button></frames-button>-->
             </div>
         </frames>
     </div>
@@ -40,20 +43,25 @@
         },
         data(){
             return{
-                goods:Array
+                goods:Array,
+                number1:this.goods.length
             }
         },
         watch:{
 
         },
         computed:{
-
+            // num(){
+            //     let a=this.number1-1
+            //     this.number1 =a
+            //     return a
+            // }
         },
         methods:{
             sumPrice(index){
                 let a=0;
-                goods1 = this.goods[index]
-                for(let i of this.goods1){
+                let goods1 = this.goods[index]
+                for(let i of goods1){
                     a+=i.sumprice
                 }
                 return a
