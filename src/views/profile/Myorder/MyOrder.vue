@@ -1,16 +1,21 @@
 <template>
     <div>
         <div>我的订单</div>
-        <frames>
+        <frames v-for="(i,index) in goods">
             <div slot="inf">
-<!--                <frames-item v-for="(i,index)in goods">-->
-<!--                    <img slot="item-picture"  :src="i.goo_image" alt="图片">-->
-<!--                    <span slot="item-name">{{i.goo_name}}</span>-->
-<!--                    <span slot="item-price">商品单价：{{i.goo_selling_price|sumPrice}}</span>-->
-<!--                    <span slot="item-number">购买数量：{{i.number}}</span>-->
-<!--                </frames-item>-->
+                <frames-item v-for="(o,index) in i">
+                    <img slot="item-picture"  :src="i[index].goo_image" alt="图片">
+                    <span slot="item-name">{{i[index].goo_name}}</span>
+                    <span slot="item-price">商品单价：{{i[index].goo_selling_price|sumPrice}}</span>
+                    <span slot="item-number">购买数量：{{i[index].number}}</span>
+                </frames-item>
+            </div>
+            <div slot="other">
+                <frames-sumprice :sumPrice="sumPrice" :createTime="i[0].creattime"></frames-sumprice>
+<!--                <frames-sumprice></frames-sumprice>-->
             </div>
             <div slot="button">
+<!--                <frames-button :paystate="i[0][0].paystate" :orderstate="i[0][0].orderstate"></frames-button>-->
                 <frames-button></frames-button>
             </div>
         </frames>
@@ -20,6 +25,7 @@
 <script>
     import Frames from "./components/Frames";
     import FramesButton from "./components/FramesButton";
+    import FramesSumprice from "./components/FramesSumprice";
     import FramesItem from "./components/FramesItem";
     import {MessageBox,Button} from 'element-ui'
     import {request} from "../../../network";
@@ -29,6 +35,7 @@
         components:{
             Frames,
             FramesButton,
+            FramesSumprice,
             FramesItem
         },
         data(){
@@ -43,7 +50,14 @@
 
         },
         methods:{
-
+            sumPrice(index){
+                let a=0;
+                goods1 = this.goods[index]
+                for(let i of this.goods1){
+                    a+=i.sumprice
+                }
+                return a
+            }
         },
         //过滤器
         filters:{

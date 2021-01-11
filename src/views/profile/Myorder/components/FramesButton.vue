@@ -13,11 +13,26 @@
         name: "FrameButton",
         props:{
             //传入商品信息
+            paystate:String,
+            orderstate:String
         },
         data(){
             return{
                 btnstate:true,
-                state:'订单状态'
+                // state:'订单状态'
+            }
+        },
+        computed:{
+            state(){
+                if(this.paystate==='订单未支付'){
+                    return '立即支付'
+                }else{
+                    if(this.orderstate==='等待发货'){
+                        return '催促发货'
+                    }else{
+                        return '确认收货'
+                    }
+                }
             }
         },
         methods:{

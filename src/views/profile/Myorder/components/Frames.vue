@@ -3,6 +3,9 @@
         <div id="Inf">
             <slot name="inf"></slot>
         </div>
+        <div id="other">
+            <slot name="other"></slot>
+        </div>
         <div id="Button">
             <slot name="button"></slot>
         </div>
@@ -17,6 +20,9 @@
 
 <style scoped>
 #Button{
+    height: 49px;
+}
+#other{
     height: 49px;
 }
 </style>
