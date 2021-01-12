@@ -16,7 +16,7 @@
             </div>
             <div slot="button">
 <!--                <frames-button :paystate="i[index].paystate" :orderstate="i[index].orderstate"></frames-button>-->
-                <frames-button :paystate="i[0].paystate" :orderstate="i[0].orderstate" :keys="Object.keys(goods)"></frames-button>
+                <frames-button :paystate="i[0].paystate" :orderstate="i[0].orderstate" :keys="i[0].ord_id"></frames-button>
 <!--                <h3>{{i[index]}}</h3>-->
 <!--                <h3>{{i[index].orderstate}}</h3>-->
 <!--                <frames-button></frames-button>-->
@@ -44,7 +44,7 @@
         data(){
             return{
                 goods:Array,
-                number1:this.goods.length
+                // number1:this.goods.length
             }
         },
         watch:{

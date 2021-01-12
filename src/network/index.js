@@ -9,7 +9,7 @@ export function request(config) {
         timeout:5000,
         //获取共享域的userid设置进haeders
         headers:{
-            token:'',
+            token:sessionStorage.getItem('sessionID'),
             //设置消息头
             // userId:this.sessionStorage.getItem('userID')
             userId:sessionStorage.getItem('userID')
