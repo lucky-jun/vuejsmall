@@ -1,7 +1,8 @@
 <template>
     <div id="ContentCartTabBar">
         <div id="title"  class="GongGong">
-            <div id="choice" class="GongGong"><el-checkbox slot="item-choice">全选</el-checkbox></div>
+            <el-checkbox @input="test0001" >全选</el-checkbox>
+<!--            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>-->
             <div id="GoodsInf" class="GongGong"><h3>商品信息</h3></div>
             <div id="price"><h3>价格</h3></div>
             <div id="InAndDe"><h3>数量</h3></div>
@@ -10,8 +11,9 @@
         <div id="context">
             <cart-tab-bar>
                 <cart-tab-bar-item v-for="(i,index) in goods" :goods="goods" :index="index">
-                    <!--                <el-checkbox slot="item-choice" ></el-checkbox>-->
+<!--                    <el-checkbox slot="item-choice" @change="ch" :value="index" :key="index" v-model="goodsCheckBox"></el-checkbox>-->
                     <input slot="item-choice" type="checkbox" :value="i" v-model="goodsCheckBox"></input>
+<!--                    <input slot="item-choice" type="checkbox" :key="index" v-model="goodsCheckBox"></input>-->
                     <img slot="item-picture" :src="i.goo_image" alt="图片">
                     <div slot="item-name">{{i.goo_name}}</div>
                     <div slot="item-price">{{sumprice(index)}}</div>
@@ -36,7 +38,7 @@
 <script>
     import CartTabBar from "./components/CartTabBar";
     import CartTabBarItem from "./components/CartTabBarItem";
-    import {MessageBox} from "element-ui"
+    import {MessageBox,Checkbox} from "element-ui"
 
     export default {
         name: "ContentCartTabBar",
@@ -51,7 +53,9 @@
             return{
                 goods:this.goods1,
                 goodsCheckBox:[],
-                goodsId:[]
+                goodsId:[],
+                chioce:false,
+                ch:true
             }
         },
         watch:{
@@ -142,6 +146,13 @@
                     MessageBox.alert('未选择商品')
                     setTimeout(()=>{MessageBox.close()},1000)
                 }
+            },
+            test0001(val){
+                console.log("点击了全选按钮："+val)
+                // if(val){
+                //     for()
+                //     this.goodsCheckBox = this.goods
+                // }
             }
         },
         filters:{

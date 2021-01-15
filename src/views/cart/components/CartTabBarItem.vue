@@ -35,11 +35,13 @@
             // goods:{
             //     type:Array
             // }
-            goods: [Array,Object]
+            goods: [Array,Object],
+            chioceState1:true
         },
         data(){
             return{
                 Cindex:this.index,
+                chioceState:this.chioceState1
             }
         },
         computed:{
