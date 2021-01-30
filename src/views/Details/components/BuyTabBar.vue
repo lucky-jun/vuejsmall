@@ -3,6 +3,9 @@
         <div id="goods">
             <slot name="goods"></slot>
         </div>
+        <div id="address">
+            <slot name="address"></slot>
+        </div>
         <div id="option">
             <slot name="option"></slot>
         </div>

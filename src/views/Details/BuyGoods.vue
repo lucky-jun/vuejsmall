@@ -15,7 +15,15 @@
                 <span>订单总价：{{sumprice|sumPrice}}</span>
             </div>
         </div>
-        <div slot="option">
+        <div id="address" slot="address">
+            <div id="addOption">
+                <a href="">选择收货地址</a><br>
+                <a href="">管理收货地址</a><br>
+                <a href="">添加收货地址</a>
+            </div>
+            <div id="addressInf"></div>
+        </div>
+        <div id="option" slot="option">
             <button @click="cancelBtn">取消订单</button>
             <button @click="submitBtn">提交订单</button>
         </div>
@@ -230,5 +238,26 @@
 </script>
 
 <style scoped>
-
+#address{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 200px;
+    border: 2px solid yellow;
+}
+#addOption{
+    /*padding-top: 80px;*/
+    text-align: center;
+    width: 200px;
+    height: 100%;
+    border: 2px solid blue;
+}
+#option{
+    margin-top: 20px;
+    margin-bottom: 100px;
+    text-align: center;
+    width: 100%;
+    height: 100px;
+    border: 2px solid red;
+}
 </style>

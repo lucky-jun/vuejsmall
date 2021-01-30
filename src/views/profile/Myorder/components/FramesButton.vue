@@ -110,6 +110,8 @@
             stateBtn(keys){
                 this.btnstate=false
                 console.log('点击了状态按钮'+keys);
+                console.log(this.paystate);
+                console.log(this.orderstate);
                 if(this.paystate==='订单未支付'){
                     request({
                         url:'/updateMyOrderToPay.do',
@@ -154,7 +156,7 @@
                         console.log('支付错误');
                     })
                 }else{
-                    if(this.orderstate==='已发货'){
+                    if(this.orderstate==='等待收货'){
                         console.log('收货按钮')
                         request({
                             url:'/deleteToMyOrderByUser.do',
@@ -174,7 +176,7 @@
                                 });
                                 setTimeout(()=>{
                                     this.$router.go(0)
-                                },2000)
+                                },1000)
                             }else{
                                 this.$message({
                                     type: 'error',
