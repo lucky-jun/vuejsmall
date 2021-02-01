@@ -14,9 +14,9 @@
         </div>
         <div id="oprations1">
 <!--            <div class="btn">-->
-                <button @click="palyBtn">结算</button>
-                <button @click="deleteBtn">删除</button>
-                <button @click="collectBtn">加入收藏</button>
+                <button @click="palyBtn()">结算</button>
+                <button @click="deleteBtn()">删除</button>
+                <button @click="collectBtn()">加入收藏</button>
 <!--            </div>-->
 <!--            <div><button @click="palyBtn">结算</button></div>-->
 <!--            <div><button @click="deleteBtn">删除</button></div>-->
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+    import {request} from "../../../network";
+
     export default {
         // 父子通信
         name: "CartTabBarItem",
@@ -35,13 +37,23 @@
             // goods:{
             //     type:Array
             // }
-            goods: [Array,Object],
+            // goods: [Array,Object],
+            goods:Object,
             chioceState1:true
         },
         data(){
             return{
                 Cindex:this.index,
-                chioceState:this.chioceState1
+                chioceState:this.chioceState1,
+                goodsI:this.goods,
+                goodsnini:[]
+            }
+        },
+        watch:{
+            index(val,oldval){
+                console.log(val)
+                console.log(oldval)
+                this.Cindex = val
             }
         },
         computed:{
@@ -53,11 +65,11 @@
             GoodsDetails(){
                 console.log('即将跳转商品详情页');
                 console.log(this.Cindex);
-
-                console.log('点击了：'+this.goods[this.Cindex].id)
-                console.log('点击了：'+this.goods[this.Cindex].name)
+                console.log(this.goods)
+                // console.log('点击了：'+this.goods[this.Cindex].id)
+                // console.log('点击了：'+this.goods[this.Cindex].name)
                 //通过query进行数据传递
-                this.$router.push({path:'/details',query:{goodsName:this.goods[this.Cindex].name,goodsId: this.goods[this.Cindex].id}})
+                this.$router.push({path:'/details',query:{goodsName:this.goods.goo_name,goodsId: this.goods.car_gooid}})
             //    动态路由跳转
             //     this.$router.push('/details/'+this.id)
             },
@@ -70,12 +82,47 @@
             deleteBtn(){
                 console.log('即将删除第：'+(this.Cindex+1)+'个商品');
                 console.log('即将删除ID为：'+this.Cid);
+                console.log(this.goods);
+                request({
+                    url:"/deleteToMyCart.do",
+                    method:"post",
+                    data:{
+                        car_gooid:this.goods.car_gooid,
+                        user_id:sessionStorage.getItem("userID")
+                    }
+                }).then(res=>{
+                    console.log("请求成功");
+                    console.log(res);
+                    console.log(res.flag);
+                    if(res.flag){
+                        this.$message({
+                            type:"success",
+                            message:"删除成功"
+                        })
+                        setTimeout(()=>{
+                            this.$router.go(0)
+                        },700)
+                    }else{
+                        this.$message({
+                            type:"error",
+                            message:"删除失败"
+                        })
+                    }
+                }).catch(err=>{
+                    console.log("请求失败")
+                    console.log(err)
+                })
             },
             collectBtn(){
                 console.log('收藏商品第：'+(this.Cindex+1)+'个商品');
             },
             palyBtn(){
-
+                console.log("结算第"+(this.Cindex+1)+"个商品")
+                console.log(this.goods)
+                this.goods.sump = this.goods.number * this.goods.goo_selling_price
+                this.goodsnini.push(this.goods)
+                console.log(this.goodsnini)
+                this.$router.push({path:'/buygoods',query:{goods:this.goodsnini}})
             }
         }
     }

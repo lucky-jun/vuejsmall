@@ -10,9 +10,9 @@
         </div>
         <div id="context">
             <cart-tab-bar>
-                <cart-tab-bar-item v-for="(i,index) in goods" :goods="goods" :index="index">
+                <cart-tab-bar-item v-for="(i,index) in goods" :goods="i" :index="index" :name="i">
 <!--                    <el-checkbox slot="item-choice" @change="ch" :value="index" :key="index" v-model="goodsCheckBox"></el-checkbox>-->
-                    <input slot="item-choice" type="checkbox" :value="i" v-model="goodsCheckBox"></input>
+                    <input slot="item-choice" name="checkbox" type="checkbox" :value="i" v-model="goodsCheckBox" @change="sese($event,index,i)"></input>
 <!--                    <input slot="item-choice" type="checkbox" :key="index" v-model="goodsCheckBox"></input>-->
                     <img slot="item-picture" :src="i.goo_image" alt="图片">
                     <div slot="item-name">{{i.goo_name}}</div>
@@ -125,6 +125,7 @@
                 //     this.goodsId.push(item.id)
                 // }
                 // console.log(this.goodsId);
+                console.log("======================================================");
                 console.log(this.goodsCheckBox);
                 // for(let i in this.goodsCheckBox){
                 //     this.toOrder[i].goo_id = this.goodsCheckBox[i].goodsId
@@ -148,11 +149,34 @@
                 }
             },
             test0001(val){
+                // const selectList = $("input[name='checkbox']")
+                // const selectList = this.$input(name="checkbox")
+                // console.log("点击了全选按钮："+selectList.length)
                 console.log("点击了全选按钮："+val)
+                // if(val){
+                //     console.log(val)
+                //     console.log(this.goodsCheckBox)
+                //     for(let i=0;i<this.goods1.length;i++){
+                //         this.goodsCheckBox+=this.goods1[i]
+                //     }
+                //     console.log(this.goodsCheckBox)
+                // }else{
+                //     console.log(val)
+                //     this.goodsCheckBox=[]
+                //     console.log(this.goodsCheckBox)
+                // }
                 // if(val){
                 //     for()
                 //     this.goodsCheckBox = this.goods
                 // }
+            },
+            sese(event,index){
+                //通过event.target.checked中的值判断是否被选中
+                // console.log(event)
+                console.log(event.target)
+                console.log(event.target.checked)
+                console.log(index)
+
             }
         },
         filters:{

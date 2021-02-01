@@ -1,11 +1,21 @@
 <template>
     <div>
-        <h1>我的界面</h1>
+<!--        <h1>我的界面</h1>-->
+        <h1></h1>
 <!--        <router-link to="/login" tag="button">登录</router-link>-->
 <!--        <router-link to="/regist" tag="button">注册</router-link>-->
-        <button @click="exitBtn">退出</button>
-        <button @click="MyOrderBtn">我的订单</button>
-        <button @click="HistoryOrderBtn">历史订单</button>
+        <el-button icon="el-icon-setting" @click="Setting">设置</el-button>
+        <el-button icon="el-icon-user" @click="ProfileData">个人资料</el-button>
+        <el-button icon="el-icon-s-order" @click="MyOrderBtn">我的订单</el-button>
+        <el-button icon="el-icon-s-claim" @click="HistoryOrderBtn">历史订单</el-button>
+        <el-button icon="el-icon-star-off" @click="myFavorite">我的收藏</el-button>
+        <el-button icon="el-icon-map-location" @click="deliveryAddress">收货地址管理</el-button>
+        <el-button icon="el-icon-switch-button" @click="exitBtn">退出</el-button>
+<!--        <button @click="ProfileData">个人资料</button>-->
+<!--        <button @click="MyOrderBtn">我的订单</button>-->
+<!--        <button @click="HistoryOrderBtn">历史订单</button>-->
+<!--        <button @click="myFavorite">我的收藏</button>-->
+<!--        <button @click="exitBtn">退出</button>-->
         <router-view></router-view>
     </div>
 </template>
@@ -42,11 +52,35 @@
                 this.$router.push('/myorder')
             },
             HistoryOrderBtn(){
-                MessageBox.alert('功能未开发，敬请期待！')
+                MessageBox.alert('功能正在开发中，敬请期待！')
                 setTimeout(()=>{
                     MessageBox.close()
                 },1000)
-            }
+            },
+            ProfileData(){
+                this.$message({
+                    type:"info",
+                    message:"功能正在开发中，敬请期待！"
+                })
+            },
+            myFavorite(){
+                this.$message({
+                    type:"info",
+                    message:"功能正在开发中，敬请期待！"
+                })
+            },
+            deliveryAddress(){
+                this.$message({
+                    type:"info",
+                    message:"功能正在开发中，敬请期待！"
+                })
+            },
+            Setting(){
+                this.$message({
+                    type:"info",
+                    message:"功能正在开发中，敬请期待！"
+                })
+            },
         }
     }
 </script>

@@ -34,7 +34,8 @@
                 name:'商品5',
                 price:23.1,
                 number:1,
-            }
+            },
+            number:Number
         },
         // props:{
         //     goods2:Array
@@ -103,7 +104,7 @@
                         data:{
                             goodsId:this.goods1.goo_id,
                             userId:sessionStorage.getItem('userID'),
-                            goodsNumber:1
+                            goodsNumber:this.number
                         }
                     }).then(res=>{
                         console.log("请求成功："+res);
@@ -111,16 +112,24 @@
                         if(res.flag){
                             console.log('添加购物车操作成功');
                             //    弹窗确认是否支付
-                            MessageBox.alert('加入购物车成功')
-                            setTimeout(() => {
-                                MessageBox.close();
-                            }, 600);
+                            // MessageBox.alert('加入购物车成功')
+                            // setTimeout(() => {
+                            //     MessageBox.close();
+                            // }, 600);
+                            this.$message({
+                                type:"success",
+                                message:"加入购物车成功"
+                            })
                         }else{
-                            console.log('添加购物车操作失败.then');
-                            MessageBox.alert('添加购物车操作失败')
-                            setTimeout(() => {
-                                MessageBox.close();
-                            }, 600);
+                            // console.log('添加购物车操作失败.then');
+                            // MessageBox.alert('添加购物车操作失败')
+                            // setTimeout(() => {
+                            //     MessageBox.close();
+                            // }, 600);
+                            this.$message({
+                                type:"error",
+                                message:"添加购物车操作失败"
+                            })
                         }
                         // 短暂alert()
                     }).catch(err=>{
@@ -137,7 +146,7 @@
                     console.log('即将跳转购买界面');
                     //    跳转购买界面
                     //     this.$router.push({path:'/buygoods',query:{goods:JSON.stringify(this.goods1)}})
-                    this.goods[0].number = 1;
+                    this.goods[0].number = this.number;
                     console.log(this.goods);
                     // Object转换数组
                     // var arr = [];
