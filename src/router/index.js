@@ -13,6 +13,7 @@ const BuyGoods = ()=>import('../views/Details/BuyGoods')
 const PaymentSuccessful = ()=>import('../views/Buy/PaymentSuccessful')
 const PaymentFailed = ()=>import('../views/Buy/PaymentFailed')
 const MyOrder = ()=>import('../views/profile/Myorder/MyOrder')
+const MyFavorite = ()=>import('../views/profile/MyFavorite/myFavorite')
 
 //安装插件
 Vue.use(VueRouter)
@@ -107,6 +108,11 @@ const routes = [
     // 我的订单
     path: '/myorder',
     component:MyOrder
+  },
+  {
+    // 我的收藏夹
+    path: '/myfavorite',
+    component:MyFavorite
   }
 ]
 

@@ -64,10 +64,11 @@
                 })
             },
             myFavorite(){
-                this.$message({
-                    type:"info",
-                    message:"功能正在开发中，敬请期待！"
-                })
+                // this.$message({
+                //     type:"info",
+                //     message:"功能正在开发中，敬请期待！"
+                // })
+                    this.$router.push("/myfavorite")
             },
             deliveryAddress(){
                 this.$message({

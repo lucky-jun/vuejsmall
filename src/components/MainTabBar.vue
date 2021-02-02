@@ -5,11 +5,11 @@
             <img slot="item-icon-active" src="../assets/img/svg/home-active.svg" alt="">
             <div slot="item-text">首页</div>
         </tab-bar-item>
-        <tab-bar-item path="/category">
+<!--        <tab-bar-item path="/category">
             <img slot="item-icon" src="../assets/img/svg/category.svg" alt="">
             <img slot="item-icon-active" src="../assets/img/svg/category-active.svg" alt="">
             <div slot="item-text">分类</div>
-        </tab-bar-item>
+        </tab-bar-item>-->
         <tab-bar-item path="/cart">
             <img slot="item-icon" src="../assets/img/svg/cart.svg" alt="">
             <img slot="item-icon-active" src="../assets/img/svg/cart-active.svg" alt="">

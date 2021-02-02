@@ -16,6 +16,8 @@
             </div>
         </div>
         <div id="address" slot="address">
+            <!--单选项，选择自提，显示自提地址；选择邮寄，显示地址选择-->
+            <!--点击提交订单，显示单选项，选择付款方式：支付宝，微信，银联，apple pay等-->
             <div id="addOption">
                 <a href="">选择收货地址</a><br>
                 <a href="">管理收货地址</a><br>

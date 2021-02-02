@@ -11,8 +11,9 @@
                 <!--        操作：加入购物车、直接购买-->
                 <div id="shuxing"><slot name="item-shuxing"></slot></div>
                 <div id="oprations">
-                    <button @click="joinCart">加入购物车</button>
-                    <button @click="buy">购买</button>
+                    <el-button type="primary" icon="el-icon-shopping-cart-2"  plain @click="joinCart">加入购物车</el-button>
+                    <el-button type="primary" icon="el-icon-goods"  plain @click="buy">购买</el-button>
+                    <el-button type="primary" icon="el-icon-star-off"  plain @click="insertFavorite">收藏商品</el-button>
                 </div>
             </div>
         </div>
@@ -164,6 +165,35 @@
                 }else{
                     this.$router.push('/login')
                 }
+            },
+            insertFavorite(){
+                console.log(this.goods)
+                request({
+                    url:"/insertToFavoriteIndetail.do",
+                    method:"post",
+                    data:{
+                        fav_gooid:this.goods[0].goo_id,
+                        fav_userid:sessionStorage.getItem("userID")
+                    }
+                }).then(res=>{
+                    console.log("请求成功");
+                    console.log(res)
+                    console.log(res.flag);
+                    if(res.flag){
+                        this.$message({
+                            type:"success",
+                            message:"收藏成功"
+                        })
+                    }else{
+                        this.$message({
+                            type:"error",
+                            message:"收藏失败"
+                        })
+                    }
+                }).catch(err=>{
+                    console.log("请求失败")
+                    console.log(err)
+                })
             }
         },
         watch:{

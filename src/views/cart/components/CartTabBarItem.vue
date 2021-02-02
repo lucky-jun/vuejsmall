@@ -16,7 +16,7 @@
 <!--            <div class="btn">-->
                 <button @click="palyBtn()">结算</button>
                 <button @click="deleteBtn()">删除</button>
-                <button @click="collectBtn()">加入收藏</button>
+                <button @click="collectBtn()">移入收藏</button>
 <!--            </div>-->
 <!--            <div><button @click="palyBtn">结算</button></div>-->
 <!--            <div><button @click="deleteBtn">删除</button></div>-->
@@ -115,6 +115,36 @@
             },
             collectBtn(){
                 console.log('收藏商品第：'+(this.Cindex+1)+'个商品');
+                console.log(this.goods)
+                request({
+                    url:"/insertToFavorite.do",
+                    method:"post",
+                    data:{
+                        fav_gooid:this.goods.car_gooid,
+                        fav_userid:sessionStorage.getItem("userID")
+                    }
+                }).then(res=>{
+                    console.log("请求成功");
+                    console.log(res)
+                    console.log(res.flag);
+                    if(res.flag){
+                        this.$message({
+                            type:"success",
+                            message:"移入成功"
+                        })
+                        setTimeout(()=>{
+                            this.$router.go(0)
+                        },700)
+                    }else{
+                        this.$message({
+                            type:"error",
+                            message:"移入失败"
+                        })
+                    }
+                }).catch(err=>{
+                    console.log("请求失败")
+                    console.log(err)
+                })
             },
             palyBtn(){
                 console.log("结算第"+(this.Cindex+1)+"个商品")
