@@ -10,6 +10,20 @@
 <!--        </div>-->
         <!--订单的状态，如确认收货，催发。。。；动态绑定Style，还有上面的-->
 <!--        <button v-if="" @click="stateBtn">{{state}}</button>-->
+        <!--支付弹窗-->
+        <el-dialog title="请选择付款方式" :visible.sync="dialogFormVisible" :before-close="handleClose">
+            <div>
+                <el-radio v-model="radio1" label="支付宝" border>支付宝</el-radio>
+                <el-radio v-model="radio1" label="微信" border>微信</el-radio>
+                <el-radio v-model="radio1" label="Apple Pay" border>Apple Pay</el-radio>
+                <el-radio v-model="radio1" label="银联" border>银联</el-radio>
+                <el-radio v-model="radio1" label="到店支付" border>到店支付</el-radio>
+            </div>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="cleanpay">稍后支付</el-button>
+                <el-button type="primary" @click="pay">确认支付</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -28,8 +42,10 @@
         data(){
             return{
                 btnstate:true,
-                BtnpayState:true
+                BtnpayState:true,
                 // state:'订单状态'
+                dialogFormVisible:false,
+                radio1:"支付宝"
             }
         },
         computed:{
@@ -113,7 +129,8 @@
                 console.log(this.paystate);
                 console.log(this.orderstate);
                 if(this.paystate==='订单未支付'){
-                    request({
+                    this.dialogFormVisible = true
+/*                    request({
                         url:'/updateMyOrderToPay.do',
                         method: 'post',
                         data:{
@@ -130,9 +147,9 @@
                                 MessageBox.alert('支付成功！即将返回上一页！','提示',{
                                     confirmButtonText: '确认',
                                     type: 'success',//success，error，info和warning
-                                    /*callback: action => {
+                                    /!*callback: action => {
                                         this.$router.go(-1)
-                                    }*/
+                                    }*!/
                                 })
                                 setTimeout(() => {
                                     MessageBox.close();
@@ -142,9 +159,9 @@
                                 MessageBox.alert('支付失败', '提示', {
                                     confirmButtonText: '确认',
                                     type: 'error',//success，error，info和warning
-                                    /*callback: action => {
+                                    /!*callback: action => {
                                         this.$router.replace('/profile')
-                                    }*/
+                                    }*!/
                                 })
                                 setTimeout(() => {
                                     MessageBox.close();
@@ -154,7 +171,7 @@
                         },3000)
                     }).catch(err=>{
                         console.log('支付错误');
-                    })
+                    })*/
                 }else{
                     if(this.orderstate==='等待收货'){
                         console.log('收货按钮')
@@ -196,8 +213,138 @@
                         },2000)
                     }
                 }
+            },
+            //提示是否关闭
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        this.$emit("dialogState",false)
+                        // MessageBox.alert('订单未支付！即将返回上一页！','提示',{
+                        //     confirmButtonText: '确认',
+                        //     type: 'success',//success，error，info和warning
+                        //     callback: action => {
+                        //         clearTimeout(handleCloseTime)
+                        //         this.$router.go(-1)
+                        //     }
+                        // })
+                        // const handleCloseTime = setTimeout(() => {
+                        //     MessageBox.close();
+                        //     this.$router.go(-1)
+                        // }, 3000);
+                        this.btnstate = true
+                        done();
+                    })
+                    .catch(_ => {});
+            },
+            pay(){
+                request({
+                    url:'/updateMyOrderToPay.do',
+                    method: 'post',
+                    data:{
+                        /*OrderId:this.keys,*/
+                        OrderId:11111111111,
+                        payState:'支付成功',
+                        orderState:'等待发货'
+                    }
+                }).then(res=>{
+                    console.log('请求成功:'+res);
+                    // MessageBox.alert('正在支付，请稍后。。。')
+                    this.$msgbox({
+                        type:"info",
+                        message:'正在支付，请稍后。。。',
+                        showCancelButton:false,
+                        showConfirmButton:false,
+                        beforeClose:(() => {})
+                    })
+                    setTimeout(()=>{
+                        MessageBox.close();
+                        if(res.flag){
+                            // MessageBox.alert('支付成功！即将返回上一页！','提示',{
+                            //     confirmButtonText: '确认',
+                            //     type: 'success',//success，error，info和warning
+                            //     callback: action => {
+                            //         clearTimeout(payYesTime)
+                            //         this.$router.go(0)
+                            //     }
+                            // })
+                            this.$msgbox({
+                                message:'支付成功！',
+                                type:"success",
+                                showCancelButton:false,
+                                showConfirmButton:true,
+                                confirmButtonText:'确认',
+                                beforeClose:((action,done) => {
+                                    console.log(action)
+                                    if(action == "confirm"){
+                                        clearTimeout(payYesTime)
+                                        done();
+                                    }
+                                    const payYesTime = setTimeout(() => {
+                                        done()
+                                        this.$router.go(0)
+                                    }, 3000);
+                                })
+                            })
+                            // const payYesTime = setTimeout(() => {
+                            //     MessageBox.close();
+                            //     this.$router.go(0)
+                            // }, 3000);
+                        }else{
+                            // this.$msgbox({
+                            //     message:'支付失败,请重试！',
+                            //     type:"error",
+                            //     showCancelButton:false,
+                            //     showConfirmButton:true,
+                            //     confirmButtonText:'确认',
+                            //     beforeClose:((action, instance, done) => {
+                            //         console.log(action)
+                            //         if(action == "confirm"){
+                            //             done();
+                            //         }else{
+                            //             ()=>{}
+                            //         }
+                            //     }),
+                            // })
+                            MessageBox.alert('支付失败,请重试！', '提示', {
+                                confirmButtonText: '确认',
+                                type: 'error',//success，error，info和warning
+                                beforeClose:((action, instance, done) => {
+                                    if(action == "confirm"){
+                                            done();
+                                        }
+                                }),
+                                callback: action => {
+                                    clearTimeout(payNoTime)
+                                    MessageBox.close();
+                                    // this.$router.replace('/profile')
+                                },
+                            })
+                            const payNoTime = setTimeout(() => {
+                                MessageBox.close();
+                            }, 3000);
+                        }
+                    },3000)
+                })
+            },
+            cleanpay(){
+                // MessageBox.alert('订单未支付！即将返回上一页！','提示',{
+                //     confirmButtonText: '确认',
+                //     type: 'success',//success，error，info和warning
+                //     callback: action => {
+                //         clearTimeout(cleanpayTime)
+                //         this.$router.go(-1)
+                //     }
+                // })
+                // const cleanpayTime = setTimeout(() => {
+                //     MessageBox.close();
+                //     this.$router.go(-1)
+                // }, 3000);
+                this.dialogFormVisible = false
+                this.btnstate = true
             }
         }
+
+
     }
 </script>
 

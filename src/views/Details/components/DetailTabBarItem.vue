@@ -18,7 +18,22 @@
             </div>
         </div>
 <!--        详情内容-->
-        <div id="context"><slot name="item-context"></slot></div>
+        <div id="context">
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="6"><div class="grid-content bg-purple" style="text-align: center" @click="detailsBtn">图文描述</div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple" style="text-align: center" @click="parameterBtn">详细参数</div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple" style="text-align: center" @click="evaluateBtn"> 评 价 </div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple" style="text-align: center" @click="problemBtn"> 问一问 </div></el-col>
+                </el-row>
+            </div>
+            <div>
+                <slot name="details" v-if="show=='details'"></slot>
+                <slot name="parameter" v-else-if="show=='parameter'"></slot>
+                <slot name="evaluate" v-else-if="show=='evaluate'"></slot>
+                <slot name="problem" v-else-if="show=='problem'"></slot>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -49,7 +64,8 @@
                 goods2:[{
                     goodsId:'',
                     goodsNumber:1
-                }]
+                }],
+                show:"details"
             }
         },
         methods:{
@@ -194,7 +210,19 @@
                     console.log("请求失败")
                     console.log(err)
                 })
-            }
+            },
+            detailsBtn(){
+                this.show = "details"
+            },
+            parameterBtn(){
+                this.show = "parameter"
+            },
+            evaluateBtn(){
+                this.show = "evaluate"
+            },
+            problemBtn(){
+                this.show = "problem"
+            },
         },
         watch:{
             goods1(val){
@@ -262,4 +290,30 @@
         height: auto;
         border: 2px solid green;
     }
+.el-row {
+    margin-bottom: 20px;
+&:last-child {
+     margin-bottom: 0;
+ }
+}
+.el-col {
+    border-radius: 4px;
+}
+.bg-purple-dark {
+    background: #99a9bf;
+}
+.bg-purple {
+    background: #d3dce6;
+}
+.bg-purple-light {
+    background: #e5e9f2;
+}
+.grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+}
+.row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+}
 </style>

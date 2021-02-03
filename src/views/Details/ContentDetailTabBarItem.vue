@@ -20,12 +20,16 @@
 <!--                    <p>商品属性1</p>-->
 
                 </div>
-                <div slot="item-context">
+<!--                <div slot="item-context">-->
+                    <div slot="details"><h1>图文描述：显示上传的商品描述图</h1></div>
+                    <div slot="parameter"><h1>详细参数：显示填写的相应商品信息参数</h1></div>
+                    <div slot="evaluate"><h1>评价：显示购买用户的评价信息</h1></div>
+                    <div slot="problem"><h1>问一问：显示未购买用户向已购买用户问相关商品使用感受等，可再此处创建问题让他人回答，已购买用户方可回答</h1></div>
 <!--                    <p>图片1</p>-->
 <!--                    <p>图片2</p>-->
 <!--                    <p>图片3</p>-->
 <!--                    <p>图片4</p>-->
-                </div>
+<!--                </div>-->
             </DetailTabBarItem>
         </DetailTabBar>
     </div>
