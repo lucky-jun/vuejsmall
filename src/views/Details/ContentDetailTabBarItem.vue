@@ -4,13 +4,16 @@
             <DetailTabBarItem :goods1="this.goods" :number="this.newnumber">
                 <img slot="item-picture" :src="goods.goo_image" alt="图片">
                 <span slot="item-title">{{goods.goo_name}}</span>
-                <span slot="item-price">欧品价：￥ {{goods.goo_selling_price}}</span>
+                <span slot="item-price">欧品价：<span style="color: red"> {{goods.goo_selling_price|showPrice}}</span></span>
                 <div slot="item-shuxing">
-                    <span>数量：
-                        <el-button icon="el-icon-minus" @click="decrementBtn" :disabled="decrementbtnstate"></el-button>
-                        <span>&nbsp;{{this.newnumber}}&nbsp;</span>
-                        <el-button icon="el-icon-plus" @click="incrementBtn" :disabled="incrementbtnstate"></el-button>
-                    </span>
+                    <div style="text-align: center;margin-top: 300px">
+                        <span>数量：
+                            <el-button icon="el-icon-minus" @click="decrementBtn" :disabled="decrementbtnstate"></el-button>
+                            <span>&nbsp;{{this.newnumber}}&nbsp;</span>
+                            <el-button icon="el-icon-plus" @click="incrementBtn" :disabled="incrementbtnstate"></el-button>
+                        </span>
+                    </div>
+
 <!--                    <p>商品属性1{{goods}}</p>-->
 <!--                    <p>商品属性1</p>-->
 <!--                    <p>商品属性1</p>-->
@@ -54,6 +57,7 @@
                 name:'商品5',
                 price:23.1,
                 number:1,
+                goo_selling_price:0.000
             }
             // goods1:Array
         },
@@ -98,6 +102,16 @@
                 this.newnumber++
                 if(this.newnumber>=99){
                     this.newnumber--
+                }
+            }
+        },
+        filters:{
+            showPrice(price){
+
+                // if(price!=undefined)
+                console.log(price);
+                if(price != undefined){
+                    return '￥'+price.toFixed(2)
                 }
             }
         },

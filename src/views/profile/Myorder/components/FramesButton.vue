@@ -241,8 +241,8 @@
                     url:'/updateMyOrderToPay.do',
                     method: 'post',
                     data:{
-                        /*OrderId:this.keys,*/
-                        OrderId:11111111111,
+                        OrderId:this.keys,
+                        // OrderId:11111111111,
                         payState:'支付成功',
                         orderState:'等待发货'
                     }
@@ -259,36 +259,36 @@
                     setTimeout(()=>{
                         MessageBox.close();
                         if(res.flag){
-                            // MessageBox.alert('支付成功！即将返回上一页！','提示',{
-                            //     confirmButtonText: '确认',
-                            //     type: 'success',//success，error，info和warning
-                            //     callback: action => {
-                            //         clearTimeout(payYesTime)
-                            //         this.$router.go(0)
-                            //     }
-                            // })
-                            this.$msgbox({
-                                message:'支付成功！',
-                                type:"success",
-                                showCancelButton:false,
-                                showConfirmButton:true,
-                                confirmButtonText:'确认',
-                                beforeClose:((action,done) => {
-                                    console.log(action)
-                                    if(action == "confirm"){
-                                        clearTimeout(payYesTime)
-                                        done();
-                                    }
-                                    const payYesTime = setTimeout(() => {
-                                        done()
-                                        this.$router.go(0)
-                                    }, 3000);
-                                })
+                            MessageBox.alert('支付成功！','提示',{
+                                confirmButtonText: '确认',
+                                type: 'success',//success，error，info和warning
+                                callback: action => {
+                                    clearTimeout(payYesTime)
+                                    this.$router.go(0)
+                                }
                             })
-                            // const payYesTime = setTimeout(() => {
-                            //     MessageBox.close();
-                            //     this.$router.go(0)
-                            // }, 3000);
+                            // this.$msgbox({
+                            //     message:'支付成功！',
+                            //     type:"success",
+                            //     showCancelButton:false,
+                            //     showConfirmButton:true,
+                            //     confirmButtonText:'确认',
+                            //     beforeClose:((action,done) => {
+                            //         console.log(action)
+                            //         if(action == "confirm"){
+                            //             clearTimeout(payYesTime)
+                            //             done();
+                            //         }
+                            //         const payYesTime = setTimeout(() => {
+                            //             done()
+                            //             this.$router.go(0)
+                            //         }, 3000);
+                            //     })
+                            // })
+                            const payYesTime = setTimeout(() => {
+                                MessageBox.close();
+                                this.$router.go(0)
+                            }, 3000);
                         }else{
                             // this.$msgbox({
                             //     message:'支付失败,请重试！',

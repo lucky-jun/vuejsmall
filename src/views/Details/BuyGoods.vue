@@ -13,6 +13,7 @@
             </buy-tab-bar-item>
             <div>
                 <span>订单总价：{{sumprice|sumPrice}}</span>
+<!--                <span>订单总价：{{sumprice}}</span>-->
             </div>
         </div>
         <div id="address1" slot="address">
@@ -369,7 +370,9 @@
         //过滤器
         filters:{
             sumPrice(price){
-                return '￥'+price.toFixed(2)
+                if(price != undefined){
+                    return '￥'+price.toFixed(2)
+                }
             }
         },
     //    获取商品ID进行展示点击购买,

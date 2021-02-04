@@ -27,7 +27,7 @@
                     <el-col :span="6"><div class="grid-content bg-purple" style="text-align: center" @click="problemBtn"> 问一问 </div></el-col>
                 </el-row>
             </div>
-            <div>
+            <div style="margin-left: 10px;margin-bottom: 100px;text-align: center">
                 <slot name="details" v-if="show=='details'"></slot>
                 <slot name="parameter" v-else-if="show=='parameter'"></slot>
                 <slot name="evaluate" v-else-if="show=='evaluate'"></slot>
@@ -65,7 +65,8 @@
                     goodsId:'',
                     goodsNumber:1
                 }],
-                show:"details"
+                show:"details",
+                goodsToBuy:[]
             }
         },
         methods:{
@@ -160,11 +161,15 @@
             },
             buy(){
                 if(sessionStorage.getItem('userID')!=null){
+                    console.log("数量："+this.number);
+                    console.log(this.goods);
                     console.log('即将跳转购买界面');
                     //    跳转购买界面
                     //     this.$router.push({path:'/buygoods',query:{goods:JSON.stringify(this.goods1)}})
                     this.goods[0].number = this.number;
+                    this.goodsToBuy.push(this.goods)
                     console.log(this.goods);
+                    console.log(this.goodsToBuy);
                     // Object转换数组
                     // var arr = [];
                     // for(var key in this.goods){
@@ -177,6 +182,7 @@
                     // }
                     // console.log("----------------------")
                     // console.log(arr)
+                    // this.$router.push({path:'/buygoods',query:{goods:this.goodsToBuy}})
                     this.$router.push({path:'/buygoods',query:{goods:this.goods}})
                 }else{
                     this.$router.push('/login')
@@ -244,51 +250,55 @@
         height: 650px;
         width: auto;
         margin: 10px;
-        border: 2px solid red;
+        /*border: 2px solid red;*/
     }
     #picture{
         width: 470px;
         height: 100%;
         float: left;
-        border: 2px solid red;
+        border: 2px solid #e4dada7a;
     }
     #inf1{
         width: 550px;
         height: 100%;
         float: left;
         margin-left: 10px;
-        border: 2px solid red;
+        /*border: 2px solid red;*/
     }
     #title{
+        text-align: center;
         width: 100%;
         height: 80px;
-        border: 2px solid red;
+        border: 2px solid #e4dada7a;
     }
     #price{
+        text-align: center;
         width: 100%;
         height: 80px;
         margin-top: 9px;
-        border: 2px solid blue;
+        border: 2px solid #e4dada7a;
     }
     #shuxing{
         width: 100%;
         height: 350px;
         margin-top: 9px;
-        border: 2px solid blue;
+        border: 2px solid #e4dada7a;
     }
     #oprations{
         width: 100%;
         height: 100px;
-        border: 2px solid blue;
+        border: 2px solid #e4dada7a;
         text-align: center;
         margin-top: 9px;
     }
 
 
     #context{
+        margin-left: 10px;
+        /*margin-bottom: 300px;*/
         width: auto;
         height: auto;
-        border: 2px solid green;
+        border: 2px solid #e4dada7a;
     }
 .el-row {
     margin-bottom: 20px;

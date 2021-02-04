@@ -1,7 +1,7 @@
 <template>
     <div id="ContentCartTabBar">
         <div id="title"  class="GongGong">
-            <el-checkbox @input="test0001" >全选</el-checkbox>
+            <el-checkbox @input="test0001" disabled>全选</el-checkbox>
 <!--            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>-->
             <div id="GoodsInf" class="GongGong"><h3>商品信息</h3></div>
             <div id="price"><h3>价格</h3></div>
@@ -190,7 +190,7 @@
 <style>
     #ContentCartTabBar{
         position: relative;
-        border: 2px solid red;
+        /*border: 2px solid #e4dada7a;*/
     }
 
     #ContentCartTabBar img{

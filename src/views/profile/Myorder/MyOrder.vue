@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="this.goods.length != 0">
         <div>我的订单</div>
         <frames v-for="(i,index) in goods">
             <div slot="inf">
@@ -23,6 +23,9 @@
             </div>
         </frames>
     </div>
+    <div v-else>
+        <h2>未加入购买任何商品，去购买商品吧</h2>
+    </div>
 </template>
 
 <script>
@@ -43,7 +46,10 @@
         },
         data(){
             return{
-                goods:Array,
+                goods: {
+                    type:Array,
+                    length:0
+                },
                 // number1:this.goods.length
             }
         },
@@ -87,7 +93,9 @@
                 console.log('我的订单界面请求数据');
                 console.log(res);
                 console.log(res.data);
-                this.goods = res.data
+                if(res.data != undefined){
+                    this.goods = res.data
+                }
             }).catch(err=>{
                 console.log('我的订单界面请求失败');
                 console.log(err);

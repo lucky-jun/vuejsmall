@@ -2,7 +2,7 @@
     <home-tab-bar id="sezhi">
         <home-tab-bar-item v-for="(i,index) in goods" :goods1="goods" :index1="index">
             <img slot="item-picture" :src="i.goo_image">
-            <span slot="item-price">{{i.goo_buying_price}}</span>
+            <span slot="item-price">{{i.goo_buying_price|showPrice}}</span>
             <span slot="item-title">{{i.goo_name}}</span>
         </home-tab-bar-item>
     </home-tab-bar>
@@ -32,7 +32,9 @@
         filters:{
             showPrice(price){
                 console.log(price);
-                return '￥'+price.toFixed(2)
+                if(price != undefined){
+                    return '￥'+price.toFixed(2)
+                }
             }
         },
         watch:{

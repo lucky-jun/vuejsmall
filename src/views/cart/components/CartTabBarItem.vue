@@ -186,12 +186,12 @@
     #choice{
         height: 100%;
         width: 30px;
-        border: 2px solid red;
+        border: 1px solid #e4dada7a;
     }
     #picture{
         height: 100%;
         width: 100px;
-        border: 2px solid red;
+        /*border: 2px solid #e4dada7a;*/
     }
     #name{
         height: 100%;

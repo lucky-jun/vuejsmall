@@ -56,6 +56,7 @@
                 setTimeout(()=>{
                     MessageBox.close()
                 },1000)
+                    // this.$router.push("/historyOrder")
             },
             ProfileData(){
                 this.$message({

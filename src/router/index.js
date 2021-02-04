@@ -14,6 +14,7 @@ const PaymentSuccessful = ()=>import('../views/Buy/PaymentSuccessful')
 const PaymentFailed = ()=>import('../views/Buy/PaymentFailed')
 const MyOrder = ()=>import('../views/profile/Myorder/MyOrder')
 const MyFavorite = ()=>import('../views/profile/MyFavorite/myFavorite')
+const HistoryOrder = ()=>import("../views/profile/HistoryOrder/HistoryOrder")
 
 //安装插件
 Vue.use(VueRouter)
@@ -113,7 +114,12 @@ const routes = [
     // 我的收藏夹
     path: '/myfavorite',
     component:MyFavorite
-  }
+  },
+  {
+    // 我的历史订单
+    path: '/historyOrder',
+    component:HistoryOrder
+  },
 ]
 
 const router = new VueRouter({

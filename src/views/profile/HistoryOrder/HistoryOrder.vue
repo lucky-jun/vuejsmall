@@ -31,7 +31,7 @@
     import {request} from "../../../network";
 
     export default {
-        name: "MyOrder",
+        name: "HistoryOrder",
         components:{
         },
         data(){
