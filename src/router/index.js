@@ -124,7 +124,9 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
+  // mode: 'hash',//打包时使用
   base: process.env.BASE_URL,
+  // base: '/front',//打包时使用history时可用，但有小Bug
   routes
 })
 

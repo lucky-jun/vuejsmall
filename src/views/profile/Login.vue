@@ -1,9 +1,12 @@
 <template>
     <div class="login_container">
+<!--        <div style="width: 20px;height: 300px;margin-top: 30px">-->
+<!--            <img src="../../assets/logo.png" alt="">-->
+<!--        </div>-->
         <div class="login_box">
-<!--            <div class="avatar_box">-->
-<!--                <img src="../assets/logo.png" alt="" />-->
-<!--            </div>-->
+            <div class="avatar_box">
+                <img src="../../assets/logo.png" alt="" />
+            </div>
             <el-form label-width="0px" class="login_form" :model="loginForm" :rules="loginFormRules" >
                 <el-form-item prop="username">
                     <el-input v-model.lazy="loginForm.username" placeholder="请输入用户名"></el-input>
@@ -179,7 +182,8 @@
         position: absolute;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: #fff;}
+        background-color: #fff;
+    }
     img {
         width: 100%;
         height: 100%;
